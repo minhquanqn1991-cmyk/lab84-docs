@@ -1,0 +1,3384 @@
+﻿<!DOCTYPE html>
+<html lang="vi" data-lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lab84 — Hướng Dẫn Sử Dụng / User Guide</title>
+  <style>
+    /* ============ Lab84 design tokens ============ */
+    :root {
+      --amber-500: #FFC107;
+      --amber-600: #F59E0B;
+      --amber-100: #FEF3C7;
+      --gray-50: #F9FAFB;
+      --gray-100: #F3F4F6;
+      --gray-200: #E5E7EB;
+      --gray-300: #D1D5DB;
+      --gray-400: #9CA3AF;
+      --gray-500: #6B7280;
+      --gray-600: #4B5563;
+      --gray-700: #374151;
+      --gray-800: #1F2937;
+      --gray-900: #111827;
+      --blue-500: #0EA5E9;
+      --purple-500: #7C3AED;
+      --green-500: #10B981;
+      --red-500: #DC2626;
+      --pink-500: #DB2777;
+      --cyan-500: #06B6D4;
+      --sidebar-w: 280px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--gray-800);
+      user-select: none;
+      -webkit-user-select: none;
+      background: var(--gray-50);
+    }
+
+    /* ============ Layout ============ */
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--gray-900);
+      color: var(--gray-200);
+      padding: 24px 20px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      overflow-y: auto;
+    }
+
+    .sidebar .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--gray-700);
+    }
+
+    .sidebar .brand .logo {
+      width: 36px;
+      height: 36px;
+      background: white;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .sidebar .brand .name {
+      font-weight: 700;
+      font-size: 16px;
+      color: white;
+    }
+
+    .sidebar .brand .ver {
+      font-size: 11px;
+      color: var(--gray-400);
+    }
+
+    .sidebar nav ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .sidebar nav ul li {
+      margin: 2px 0;
+    }
+
+    .sidebar nav ul li a {
+      display: block;
+      padding: 6px 10px;
+      color: var(--gray-300);
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .sidebar nav ul li a:hover {
+      background: var(--gray-800);
+      color: white;
+    }
+
+    .sidebar nav ul li a.section {
+      font-weight: 600;
+      color: var(--amber-500);
+      margin-top: 10px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .sidebar nav ul li ul {
+      padding-left: 12px;
+      margin-top: 2px;
+    }
+
+    .sidebar nav ul li ul li a {
+      font-size: 12px;
+      color: var(--gray-400);
+    }
+
+    .main {
+      margin-left: var(--sidebar-w);
+      padding: 32px 48px 80px 48px;
+    }
+
+    /* ============ Header / language toggle ============ */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+      border-bottom: 2px solid var(--amber-500);
+    }
+
+    .topbar h1 {
+      margin: 0;
+      font-size: 22px;
+      color: var(--gray-900);
+    }
+
+    .topbar h1 .sub {
+      font-size: 13px;
+      color: var(--gray-500);
+      font-weight: 400;
+      margin-left: 8px;
+    }
+
+    .lang-toggle {
+      display: inline-flex;
+      background: white;
+      border: 1px solid var(--gray-300);
+      border-radius: 999px;
+      padding: 3px;
+      gap: 0;
+    }
+
+    .lang-toggle button {
+      border: 0;
+      background: transparent;
+      padding: 6px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--gray-600);
+    }
+
+    .lang-toggle button.active {
+      background: var(--amber-500);
+      color: var(--gray-900);
+    }
+
+    /* ============ Typography ============ */
+    h2 {
+      font-size: 20px;
+      margin: 36px 0 10px 0;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--gray-200);
+      color: var(--gray-900);
+    }
+
+    h2 .en {
+      font-size: 13px;
+      color: var(--gray-500);
+      font-weight: 400;
+      margin-left: 6px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin: 24px 0 8px 0;
+      color: var(--gray-800);
+    }
+
+    h3 .en {
+      font-size: 12px;
+      color: var(--gray-500);
+      font-weight: 400;
+      margin-left: 6px;
+    }
+
+    h4 {
+      font-size: 14px;
+      margin: 16px 0 6px 0;
+      color: var(--gray-700);
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    ul,
+    ol {
+      padding-left: 22px;
+    }
+
+    ul li,
+    ol li {
+      margin: 4px 0;
+    }
+
+    code,
+    kbd {
+      background: var(--gray-100);
+      border: 1px solid var(--gray-200);
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-family: 'Consolas', 'Cascadia Code', monospace;
+      font-size: 12.5px;
+      color: var(--gray-800);
+    }
+
+    kbd {
+      background: white;
+      box-shadow: 0 1px 0 var(--gray-300);
+    }
+
+    /* ============ Components ============ */
+    .card {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 12px 0;
+    }
+
+    .card.amber {
+      border-left: 4px solid var(--amber-500);
+    }
+
+    .card.blue {
+      border-left: 4px solid var(--blue-500);
+    }
+
+    .card.red {
+      border-left: 4px solid var(--red-500);
+    }
+
+    .card.green {
+      border-left: 4px solid var(--green-500);
+    }
+
+    .module-card {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin: 16px 0;
+      overflow: hidden;
+    }
+
+    .module-card.has-img {
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+    }
+
+    .module-body {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .module-img {
+      flex: 0 0 38%;
+      align-self: flex-start;
+    }
+
+    .module-img img {
+      width: 100%;
+      max-height: 360px;
+      object-fit: contain;
+      object-position: top left;
+      display: block;
+      border-radius: 6px;
+    }
+
+    .module-card.wip {
+      position: relative;
+      overflow: hidden;
+    }
+    .module-card.wip::after {
+      content: "In Development";
+      position: absolute;
+      top: 38%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-30deg);
+      font-size: 4.8rem;
+      font-weight: 800;
+      color: rgba(220, 38, 38, 0.18);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: 0.05em;
+    }
+
+    .module-head {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .module-glyph {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      border-radius: 7px;
+      color: white;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .module-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gray-900);
+    }
+
+    .module-title .en {
+      color: var(--gray-500);
+      font-weight: 400;
+      font-size: 12px;
+      margin-left: 6px;
+    }
+
+    .module-title .panel {
+      display: inline-block;
+      margin-left: 8px;
+      font-size: 11px;
+      padding: 2px 8px;
+      background: var(--gray-100);
+      color: var(--gray-600);
+      border-radius: 999px;
+      font-weight: 500;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 12px 0;
+      font-size: 13px;
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    table th,
+    table td {
+      border-bottom: 1px solid var(--gray-200);
+      padding: 8px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    table th {
+      background: var(--gray-100);
+      font-weight: 600;
+      color: var(--gray-700);
+    }
+
+    table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .step-list {
+      counter-reset: step;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .step-list>li {
+      counter-increment: step;
+      padding-left: 36px;
+      position: relative;
+      margin: 8px 0;
+    }
+
+    .step-list>li::before {
+      content: counter(step);
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 24px;
+      height: 24px;
+      background: var(--amber-500);
+      color: var(--gray-900);
+      border-radius: 50%;
+      font-weight: 700;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--gray-100);
+      color: var(--gray-600);
+    }
+
+    .badge.warn {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .badge.info {
+      background: #DBEAFE;
+      color: #1E40AF;
+    }
+
+    .badge.green {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+
+    .badge.red {
+      background: #FEE2E2;
+      color: #B91C1C;
+    }
+
+    .badge.red-dark {
+      background: #FECACA;
+      color: #7F1D1D;
+    }
+
+    .badge.cyan {
+      background: #CFFAFE;
+      color: #155E75;
+    }
+
+    .badge.pink {
+      background: #FCE7F3;
+      color: #9D174D;
+    }
+
+    /* Lang switching */
+    [data-lang="vi"] .en-only {
+      display: none;
+    }
+
+    [data-lang="en"] .vi-only {
+      display: none;
+    }
+
+    /* Ribbon visual mockup */
+    .ribbon-mock {
+      background: linear-gradient(to bottom, #fafafa, #efefef);
+      border: 1px solid var(--gray-300);
+      border-radius: 6px;
+      padding: 14px;
+      margin: 16px 0;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      overflow-x: auto;
+    }
+
+    .panel-mock {
+      border: 1px solid var(--gray-300);
+      background: white;
+      border-radius: 4px;
+      padding: 6px 10px 18px 10px;
+      min-width: 100px;
+      position: relative;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .panel-mock::after {
+      content: attr(data-name);
+      position: absolute;
+      bottom: 3px;
+      left: 0;
+      right: 0;
+      font-size: 10px;
+      color: var(--gray-500);
+    }
+
+    .btn-mock {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 4px 4px 0 4px;
+      font-size: 11px;
+      color: var(--gray-700);
+      min-width: 56px;
+    }
+
+    .btn-mock .g {
+      width: 32px;
+      height: 32px;
+      border-radius: 4px;
+      color: white;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 3px;
+      font-size: 14px;
+    }
+
+    .stack-mock {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .stack-mock .row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 4px;
+      font-size: 11px;
+    }
+
+    .stack-mock .row .sg {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      color: white;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      flex-shrink: 0;
+    }
+
+    footer {
+      margin-top: 48px;
+      padding-top: 20px;
+      border-top: 1px solid var(--gray-200);
+      font-size: 12px;
+      color: var(--gray-500);
+      text-align: center;
+    }
+
+    /* ============ Visual guide (screenshots) ============ */
+    .shot-card {
+      background: white;
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 16px 0;
+    }
+
+    .shot-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .shot-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--amber-500);
+      color: var(--gray-900);
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .shot-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--gray-900);
+    }
+
+    .shot-file {
+      font-family: 'Consolas', monospace;
+      font-size: 11px;
+      color: var(--gray-500);
+      margin-left: 6px;
+    }
+
+    .shot-frame {
+      position: relative;
+      background: repeating-linear-gradient(45deg, #F3F4F6, #F3F4F6 10px, #FFFFFF 10px, #FFFFFF 20px);
+      border: 2px dashed var(--gray-300);
+      border-radius: 6px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--gray-500);
+      font-size: 13px;
+      padding: 24px;
+      margin: 8px 0;
+    }
+
+    .shot-frame.has-image {
+      background: white;
+      border-style: solid;
+      padding: 0;
+    }
+
+    .shot-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+
+    .shot-frame .ph-icon {
+      font-size: 32px;
+      color: var(--gray-400);
+      margin-bottom: 6px;
+    }
+
+    .shot-frame .ph-file {
+      font-family: 'Consolas', monospace;
+      color: var(--gray-700);
+      margin-top: 4px;
+    }
+
+    .shot-caption {
+      font-size: 12px;
+      color: var(--gray-600);
+      margin: 8px 0 4px 0;
+    }
+
+    .annotation-list {
+      font-size: 12.5px;
+      background: var(--gray-50);
+      border-left: 3px solid var(--amber-500);
+      padding: 8px 14px;
+      margin: 8px 0 0 0;
+      border-radius: 0 4px 4px 0;
+    }
+
+    .annotation-list strong {
+      color: var(--gray-800);
+    }
+
+    .annotation-list ol {
+      margin: 4px 0 4px 0;
+      padding-left: 22px;
+    }
+
+    .annotation-list ol li {
+      margin: 2px 0;
+    }
+
+    @media (max-width: 980px) {
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+
+      .main {
+        margin-left: 0;
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="logo">
+          <svg viewBox="30 0 196 220" width="23" height="25" xmlns="http://www.w3.org/2000/svg">
+            <g fill="none" stroke="#161A77" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+              <ellipse cx="78"  cy="52"  rx="40" ry="40"/>
+              <ellipse cx="78"  cy="152" rx="60" ry="60"/>
+              <line x1="198" y1="6"   x2="90"  y2="178"/>
+              <line x1="198" y1="6"   x2="198" y2="212"/>
+              <line x1="90"  y1="178" x2="218" y2="178"/>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <div class="name">Lab84</div>
+          <div class="ver">Revit 2022–2027</div>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#intro" class="section"><span class="vi-only">Bắt đầu</span><span class="en-only">Getting
+                started</span></a></li>
+          <li><a href="#intro"><span class="vi-only">Giới thiệu</span><span class="en-only">Overview</span></a></li>
+          <li><a href="#install"><span class="vi-only">Cài đặt</span><span class="en-only">Installation</span></a></li>
+          <li><a href="#license"><span class="vi-only">License & Trial 30 ngày</span><span class="en-only">License &
+                30-day trial</span></a></li>
+          <li><a href="#ribbon"><span class="vi-only">Tab Ribbon "Lab84"</span><span class="en-only">"Lab84" ribbon
+                tab</span></a></li>
+
+          <li><a href="#panel-admin" class="section">Panel · Admin</a></li>
+          <li><a href="#help-cmd">License</a></li>
+          <li><a href="#language-cmd"><span class="vi-only">Ngôn ngữ</span><span class="en-only">Language</span></a>
+          </li>
+          <li><a href="#open-log-cmd">Log</a></li>
+
+          <li><a href="#panel-manager" class="section">Panel · Manager</a></li>
+          <li><a href="#style-manager">Style Manager</a></li>
+          <li><a href="#family-manager">Family Manager</a></li>
+          <li><a href="#parameter-manager">Parameter Manager</a></li>
+          <li><a href="#schedule-manager">Schedule Manager</a></li>
+
+          <li><a href="#panel-utility" class="section">Panel · Utility</a></li>
+          <li><a href="#quick-select">Quick Select</a></li>
+          <li><a href="#set-parameter">Set Parameter</a></li>
+          <li><a href="#element-hide">Element Hide</a></li>
+          <li><a href="#fill-region">Fill Region</a></li>
+          <li><a href="#space-text-note">Space Text Note</a></li>
+
+          <li><a href="#smart-naming">Smart Naming</a></li>
+
+          <li><a href="#panel-excel" class="section">Panel · Excel</a></li>
+          <li><a href="#excel-link">Excel Link</a></li>
+          <li><a href="#export-schedule-cmd">Export Schedule</a></li>
+
+          <li><a href="#panel-pile" class="section">Panel · Pile Structure</a></li>
+          <li><a href="#pile-coord">Pile Coordinates</a></li>
+          <li><a href="#pile-dim">Pile Dim</a></li>
+          <li><a href="#pile-name">Pile Name</a></li>
+
+          <li><a href="#panel-dimensions" class="section">Panel · Dimensions</a></li>
+          <li><a href="#dim-column">Dim Column</a></li>
+          <li><a href="#dim-wall">Dim Wall</a></li>
+          <li><a href="#dim-edit">Dim Edit</a></li>
+
+          <li><a href="#panel-sheets" class="section">Panel · Sheets</a></li>
+          <li><a href="#sheet-set">Sheet Set</a></li>
+          <li><a href="#set-sheet-number">Set Sheet Number</a></li>
+          <li><a href="#duplicate-sheet-view">Duplicate Sheet / View</a></li>
+          <li><a href="#place-view">Place View</a></li>
+          <li><a href="#align-view">Align View</a></li>
+          <li><a href="#find-view">Find View</a></li>
+
+          <li><a href="#panel-export" class="section">Panel · Export</a></li>
+          <li><a href="#export-sheet-view">Export Sheet / View</a></li>
+
+          <li><a href="#panel-revision" class="section">Panel · Revision</a></li>
+          <li><a href="#add-remove-revision">Revision</a></li>
+          <li><a href="#cloud-revision-manager">Cloud Manager</a></li>
+
+          <li><a href="#panel-timeline" class="section">Panel · Revit Model Timeline</a></li>
+          <li><a href="#tools-cmd">Tools</a></li>
+          <li><a href="#report-cmd">Report</a></li>
+
+          <li><a href="#troubleshoot" class="section"><span class="vi-only">Tham khảo</span><span
+                class="en-only">Reference</span></a></li>
+          <li><a href="#troubleshoot"><span class="vi-only">Xử lý sự cố</span><span
+                class="en-only">Troubleshooting</span></a></li>
+          <li><a href="#contact"><span class="vi-only">Liên hệ</span><span class="en-only">Contact</span></a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <h1>
+          <span class="vi-only">HƯỚNG DẪN SỬ DỤNG</span>
+          <span class="en-only">USER GUIDE</span>
+        </h1>
+        <div class="lang-toggle" role="tablist">
+          <button id="btn-vi" class="active" type="button">Tiếng Việt</button>
+          <button id="btn-en" type="button">English</button>
+        </div>
+      </header>
+
+      <!-- ============ INTRO ============ -->
+      <section id="intro">
+        <h2>1. <span class="vi-only">Giới thiệu</span><span class="en-only">Overview</span></h2>
+
+        <div class="vi-only">
+          <p><strong>Lab84</strong> là bộ addin Revit do Hiển Phan phát triển, tích hợp nhiều nhóm công cụ chuyên biệt vào một tab ribbon duy nhất. Tool hỗ trợ Revit 2022 đến 2027.</p>
+          <p><strong>Lab84</strong> được xây dựng để bù đắp những chỗ Revit gốc còn thiếu hoặc làm chậm khi làm việc theo nhóm và xử lý dữ liệu quy mô lớn.</p>
+        </div>
+        <div class="en-only">
+          <p><strong>Lab84</strong> is a Revit add-in developed by Hiển Phan, consolidating multiple specialized tool groups into a single ribbon tab. It supports Revit 2022 through 2027.</p>
+          <p><strong>Lab84</strong> fills the gaps where vanilla Revit is slow or absent — especially for team workflows and large-scale data management.</p>
+        </div>
+
+        <h3>1.1 <span class="vi-only">Cấu trúc ribbon hiện tại</span><span class="en-only">Current ribbon
+            structure</span></h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Panel</th>
+              <th><span class="vi-only">Chức năng</span><span class="en-only">Function</span></th>
+              <th><span class="vi-only">Dùng khi…</span><span class="en-only">Use when…</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Admin</td>
+              <td>License · Language · Log</td>
+              <td class="vi-only">Xem trạng thái kích hoạt, đổi VI/EN, mở nhanh thư mục log</td>
+              <td class="en-only">Check activation status, switch VI/EN, quickly open the log folder</td>
+            </tr>
+            <tr>
+              <td>Manager</td>
+              <td>Style · Family · Parameter · Schedule Manager</td>
+              <td class="vi-only">Dọn dẹp style, family, parameter, schedule trong project</td>
+              <td class="en-only">Clean up styles, families, parameters, and schedules</td>
+            </tr>
+            <tr>
+              <td>Utility</td>
+              <td>Quick Select · Smart Naming · Set Parameter · Element Hide · Fill Region · Space Text Note</td>
+              <td class="vi-only">Xử lý chọn lọc, đánh số/đặt tên, sửa parameter, kiểm tra ẩn/hiện, chỉnh annotation
+                nhanh</td>
+              <td class="en-only">Selection, numbering/naming, parameter editing, hidden-element checks, and quick
+                annotation utilities</td>
+            </tr>
+            <tr>
+              <td>Excel</td>
+              <td>Excel Link · Export Schedule</td>
+              <td class="vi-only">Chèn bảng Excel vào Revit, xuất Schedule, auto-sync</td>
+              <td class="en-only">Embed Excel tables into Revit, export schedules, auto-sync</td>
+            </tr>
+            <tr>
+              <td>Pile Structure</td>
+              <td>Coordinates · Dim · Name</td>
+              <td class="vi-only">Xử lý hàng loạt cọc móng (toạ độ, dim đến grid, đặt tên)</td>
+              <td class="en-only">Bulk-process foundation piles (coords, dim, naming)</td>
+            </tr>
+            <tr>
+              <td>Dimensions</td>
+              <td>Dim Column · Dim Wall · Dim Edit</td>
+              <td class="vi-only">Tạo và kiểm tra dimension cho cột, tường, override text</td>
+              <td class="en-only">Create and audit dimensions for columns, walls, and text overrides</td>
+            </tr>
+            <tr>
+              <td>Sheets</td>
+              <td>Sheet Set · Set Sheet Number · Duplicate Sheet / View · Place / Align / Find View</td>
+              <td class="vi-only">Tổ chức sheet, đánh số, đặt view lên sheet, căn hàng loạt</td>
+              <td class="en-only">Organize sheets, renumber, place views, and align layouts in batch</td>
+            </tr>
+            <tr>
+              <td>Export</td>
+              <td>Export Sheet / View</td>
+              <td class="vi-only">Xuất PDF/DWG hàng loạt với profile và template tên file</td>
+              <td class="en-only">Batch-export PDF/DWG with profiles and file naming templates</td>
+            </tr>
+            <tr>
+              <td>Revision</td>
+              <td>Revision · Cloud Manager</td>
+              <td class="vi-only">Thêm/xoá revision hàng loạt, quản lý revision cloud</td>
+              <td class="en-only">Batch add/remove revisions and manage revision clouds</td>
+            </tr>
+            <tr>
+              <td>Revit Model Timeline</td>
+              <td>Tools · Report</td>
+              <td class="vi-only">Xem báo cáo hoạt động project, xuất log 30 ngày</td>
+              <td class="en-only">View project activity report, export 30-day log</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>1.2 <span class="vi-only">Tương thích</span><span class="en-only">Compatibility</span></h3>
+        <ul>
+          <li><strong>Revit:</strong> 2022, 2023, 2024, 2025, 2026, 2027 (Windows 64-bit)</li>
+          <li><strong>OS:</strong> Windows 10 / 11 64-bit</li>
+          <li><strong>.NET runtime:</strong> <span class="vi-only">Revit tự load — không cần cài thêm</span><span
+              class="en-only">Loaded by Revit — no extra install needed</span></li>
+        </ul>
+      </section>
+
+      <!-- ============ INSTALL ============ -->
+      <section id="install">
+        <h2>2. <span class="vi-only">Cài đặt</span><span class="en-only">Installation</span></h2>
+
+        <h3>2.1 <span class="vi-only">Cài bằng file installer (.exe) — khuyến nghị</span><span class="en-only">Install
+            via .exe installer — recommended</span></h3>
+        <ol class="step-list">
+          <li><span class="vi-only">Tải file <code>Lab84_Setup_vX.Y.Z.exe</code> từ nhà cung cấp.</span><span
+              class="en-only">Download <code>Lab84_Setup_vX.Y.Z.exe</code> from the vendor.</span></li>
+          <li><span class="vi-only">Đóng Revit hoàn toàn (kiểm tra ở Task Manager).</span><span class="en-only">Close
+              Revit completely (verify via Task Manager).</span></li>
+          <li><span class="vi-only">Chạy file <code>.exe</code> — installer cài per-user (không cần quyền Admin
+              Windows).</span><span class="en-only">Run the <code>.exe</code> — installs per-user (no Windows Admin
+              rights needed).</span></li>
+          <li><span class="vi-only">Mở Revit. Tab <code>Lab84</code> xuất hiện ngay cạnh tab Add-ins.</span><span
+              class="en-only">Open Revit. The <code>Lab84</code> tab appears next to the Add-ins tab.</span></li>
+        </ol>
+
+        <div class="card amber">
+          <strong><span class="vi-only">Vị trí cài</span><span class="en-only">Install location</span>:</strong>
+          <code>%APPDATA%\Autodesk\ApplicationPlugins\Lab84.bundle\</code>
+          <p style="margin-top:6px;">
+            <span class="vi-only">Bundle chứa DLL của 6 năm Revit (2022–2027). Khi mở Revit, Autodesk chọn đúng folder
+              năm tương ứng để load.</span>
+            <span class="en-only">The bundle contains DLLs for all 6 Revit years (2022–2027). When Revit opens, Autodesk
+              loads the matching year folder.</span>
+          </p>
+        </div>
+
+        <h3>2.2 <span class="vi-only">Gỡ cài đặt</span><span class="en-only">Uninstall</span></h3>
+        <ul>
+          <li><span class="vi-only">Vào <kbd>Settings</kbd> → <kbd>Apps</kbd> → tìm <em>Lab84</em> →
+              <kbd>Uninstall</kbd>.</span><span class="en-only">Go to <kbd>Settings</kbd> → <kbd>Apps</kbd> → find
+              <em>Lab84</em> → <kbd>Uninstall</kbd>.</span></li>
+          <li><span class="vi-only">Hoặc xoá thủ công folder
+              <code>%APPDATA%\Autodesk\ApplicationPlugins\Lab84.bundle\</code>.</span><span class="en-only">Or
+              manually delete <code>%APPDATA%\Autodesk\ApplicationPlugins\Lab84.bundle\</code>.</span></li>
+        </ul>
+      </section>
+
+      <!-- ============ LICENSE ============ -->
+      <section id="license">
+        <h2>3. License <span class="vi-only">& Trial 30 ngày</span><span class="en-only">& 30-day trial</span></h2>
+
+        <div class="vi-only">
+          <p>Lần đầu cài, addin tự kích hoạt <strong>Trial 30 ngày</strong> — dùng đầy đủ chức năng, không giới hạn. Sau
+            30 ngày, addin vẫn load nhưng các tool nghiệp vụ bị khoá (panel <em>Admin</em> vẫn hoạt động để bạn nạp
+            license).</p>
+        </div>
+        <div class="en-only">
+          <p>On first install, the add-in starts a <strong>30-day trial</strong> — full features, no limits. After 30
+            days, the add-in still loads but business tools are locked (the <em>Admin</em> panel still works so you can
+            install a license).</p>
+        </div>
+
+        <h3>3.1 <span class="vi-only">Kích hoạt license</span><span class="en-only">Activate a license</span></h3>
+        <ol class="step-list">
+          <li>
+            <span class="vi-only">Vào tab <code>Lab84</code> → panel <strong>Admin</strong> → nút
+              <strong>License</strong>.</span>
+            <span class="en-only">Open the <code>Lab84</code> tab → <strong>Admin</strong> panel → click
+              <strong>License</strong>.</span>
+          </li>
+          <li>
+            <span class="vi-only">Bấm <strong>Copy Machine ID</strong> → gửi mã này cho nhà cung cấp qua email.</span>
+            <span class="en-only">Click <strong>Copy Machine ID</strong> → send the ID to the vendor by email.</span>
+          </li>
+          <li>
+            <span class="vi-only">Nhà cung cấp gửi lại file <code>.lic</code>.</span>
+            <span class="en-only">The vendor returns a signed <code>.lic</code> file.</span>
+          </li>
+          <li>
+            <span class="vi-only">Trong dialog License, bấm <strong>Nạp file .lic</strong> → chọn file vừa nhận →
+              Activated.</span>
+            <span class="en-only">In the License dialog, click <strong>Install .lic file</strong> → pick the file →
+              Activated state.</span>
+          </li>
+        </ol>
+
+      </section>
+
+      <!-- ============ RIBBON OVERVIEW ============ -->
+      <section id="ribbon">
+        <h2>4. <span class="vi-only">Tab Ribbon "Lab84"</span><span class="en-only">"Lab84" ribbon tab</span></h2>
+        <p>
+          <span class="vi-only">Ribbon hiện tại có 10 panel chính (trái → phải):</span>
+          <span class="en-only">The current ribbon contains 10 main panels (left → right):</span>
+        </p>
+
+        <div class="ribbon-mock">
+          <div class="panel-mock" data-name="Admin">
+            <div class="stack-mock">
+              <div class="row">
+                <div class="sg" style="background:#D97706">K</div><span>License</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#10B981">文</div><span><span class="vi-only">Ngôn ngữ</span><span
+                    class="en-only">Language</span></span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#6B7280">L</div><span>Log</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-mock" data-name="Manager">
+            <div class="stack-mock">
+              <div class="row">
+                <div class="sg" style="background:#7C3AED">S</div><span>Style Manager</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#0EA5E9">F</div><span>Family Manager</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#10B981">P</div><span>Parameter Manager</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#F97316">SM</div><span>Schedule Manager</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-mock" data-name="Utility">
+            <div class="stack-mock">
+              <div class="row">
+                <div class="sg" style="background:#0EA5E9">Q</div><span>Quick Select</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#10B981">S</div><span>Smart Naming</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#8B5CF6">SP</div><span>Set Parameter</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#EF4444">EH</div><span>Element Hide</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#8B5CF6">FR</div><span>Fill Region</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#F97316">ST</div><span>Space Text Note</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-mock" data-name="Excel">
+            <div class="stack-mock">
+              <div class="row">
+                <div class="sg" style="background:#0EA5E9">X</div><span>Excel Link</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#10B981">ES</div><span>Export Schedule</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-mock" data-name="Pile Structure">
+            <div class="stack-mock">
+              <div class="row">
+                <div class="sg" style="background:#DB2777">C</div><span>Pile Coordinates</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#F59E0B">D</div><span>Pile Dim</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#06B6D4">N</div><span>Pile Name</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-mock" data-name="Dimensions">
+            <div class="stack-mock">
+              <div class="row">
+                <div class="sg" style="background:#F59E0B">DC</div><span>Dim Column</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#F59E0B">DW</div><span>Dim Wall</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#F59E0B">DE</div><span>Dim Edit</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-mock" data-name="Sheets">
+            <div class="stack-mock">
+              <div class="row">
+                <div class="sg" style="background:#06B6D4">SS</div><span>Sheet Set</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#0EA5E9">SN</div><span>Set Sheet No.</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#06B6D4">DS</div><span>Duplicate Sheet</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#14B8A6">PV</div><span>Place View</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#6366F1">AV</div><span>Align View</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#F59E0B">FV</div><span>Find View</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-mock" data-name="Export">
+            <div class="btn-mock">
+              <div class="g" style="background:#F59E0B">EX</div>Export
+            </div>
+          </div>
+          <div class="panel-mock" data-name="Revision">
+            <div class="stack-mock">
+              <div class="row">
+                <div class="sg" style="background:#F97316">Rev</div><span>Revision</span>
+              </div>
+              <div class="row">
+                <div class="sg" style="background:#3B82F6">CR</div><span>Cloud Manager</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel-mock" data-name="Revit Model Timeline">
+            <div class="btn-mock">
+              <div class="g" style="background:#6B7280">⚙</div>Tools
+            </div>
+            <div class="btn-mock">
+              <div class="g" style="background:#7C3AED">■</div>Report
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============ PANEL ADMIN ============ -->
+      <section id="panel-admin">
+        <h2>5. Panel · Admin</h2>
+
+        <article id="help-cmd" data-img="screenshots/License.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#D97706">K</div>
+            <div class="module-title">License <span class="en">/ License</span><span class="panel">Admin</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Nút <strong>License</strong> là điểm vào chính cho phần kích hoạt. Popup hiển thị
+              trạng thái session, số ngày trial còn lại, Machine ID, 3 bước kích hoạt license và liên kết gửi email yêu
+              cầu tới nhà cung cấp.</span>
+            <span class="en-only">The <strong>License</strong> button is the main activation entry point. It shows
+              session status, remaining trial days, Machine ID, the 3-step activation guide, and a vendor request email
+              shortcut.</span>
+          </p>
+          <h4><span class="vi-only">Trạng thái có thể gặp</span><span class="en-only">Possible states</span></h4>
+          <table>
+            <thead>
+              <tr>
+                <th><span class="vi-only">Trạng thái</span><span class="en-only">State</span></th>
+                <th><span class="vi-only">Ý nghĩa</span><span class="en-only">Meaning</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="badge info">Trial</span></td>
+                <td><span class="vi-only">Đang dùng thử — còn N/30 ngày.</span><span class="en-only">In trial — N/30
+                    days remaining.</span></td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background:#D1FAE5;color:#065F46">Activated</span></td>
+                <td><span class="vi-only">License hợp lệ — full feature.</span><span class="en-only">Valid license —
+                    full features.</span></td>
+              </tr>
+              <tr>
+                <td><span class="badge warn">Expired</span></td>
+                <td><span class="vi-only">License hết hạn — chỉ panel Admin còn dùng được.</span><span
+                    class="en-only">License expired — only the Admin panel works.</span></td>
+              </tr>
+              <tr>
+                <td><span class="badge" style="background:#FEE2E2;color:#991B1B">Invalid</span></td>
+                <td><span class="vi-only">File .lic sai chữ ký hoặc sai Machine ID.</span><span class="en-only">.lic
+                    file has invalid signature or wrong Machine ID.</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article id="language-cmd" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#10B981">文</div>
+            <div class="module-title"><span class="vi-only">Ngôn ngữ</span><span class="en-only">Language</span><span
+                class="en">/ Language</span><span class="panel">Admin</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Pulldown 2 mục: <strong>Tiếng Việt</strong> / <strong>English</strong>. Đổi xong,
+              <em>tất cả</em> cửa sổ đang mở đều cập nhật ngay lập tức (không phải đóng-mở lại).</span>
+            <span class="en-only">Pulldown with 2 items: <strong>Tiếng Việt</strong> / <strong>English</strong>. After
+              switching, <em>all</em> open windows refresh labels immediately (no need to close/reopen).</span>
+          </p>
+        </article>
+
+        <article id="open-log-cmd" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#6B7280">L</div>
+            <div class="module-title">Log <span class="en">/ Log</span><span class="panel">Admin</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Mở trực tiếp thư mục runtime log của Lab84 trong Windows Explorer để tra cứu lỗi
+              nhanh. Dùng khi button không phản hồi, tool mở chậm, hoặc cần gửi file log cho support.</span>
+            <span class="en-only">Opens the Lab84 runtime log folder directly in Windows Explorer for quick
+              troubleshooting. Use it when buttons do not respond, tools open slowly, or support asks for log
+              files.</span>
+          </p>
+          <div class="card blue">
+            <strong>Path:</strong> <code>%LOCALAPPDATA%\Lab84\Logs\Client\</code>
+          </div>
+        </article>
+      </section>
+
+      <!-- ============ PANEL MANAGER ============ -->
+      <section id="panel-manager">
+        <h2>6. Panel · Manager</h2>
+
+        <!-- STYLE MANAGER -->
+        <article id="style-manager" data-img="screenshots/Style Manager.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#7C3AED">S</div>
+            <div class="module-title">Style Manager <span class="en">/ Style Manager</span><span
+                class="panel">Manager</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Hỗ trợ inline-edit, multi-select bulk Delete/Merge, đếm Usage để biết style nào
+              không còn dùng.</span>
+            <span class="en-only">Supports inline-edit, multi-select bulk Delete/Merge, and Usage counting so you can
+              spot unused styles.</span>
+          </p>
+
+          <h4>12 tab</h4>
+          <table>
+            <thead>
+              <tr>
+                <th>Tab</th>
+                <th><span class="vi-only">Quản lý gì</span><span class="en-only">Manages</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Object Styles</td>
+                <td>Categories + LineWeight Cut/Projection + Color + LinePattern + Material</td>
+              </tr>
+              <tr>
+                <td>Line Styles</td>
+                <td>Line subcategory (3 cột: Weight / Color / Pattern)</td>
+              </tr>
+              <tr>
+                <td>Line Patterns</td>
+                <td><span class="vi-only">Custom dash / dot / space patterns</span><span class="en-only">Custom dash /
+                    dot / space patterns</span></td>
+              </tr>
+              <tr>
+                <td>Fill Patterns</td>
+                <td>Drafting / Model fill patterns</td>
+              </tr>
+              <tr>
+                <td>Filled Regions</td>
+                <td>FilledRegionType + merge</td>
+              </tr>
+              <tr>
+                <td>Dimension Types</td>
+                <td><span class="vi-only">30+ tham số, 5 cột Tick Mark editable, 8 enum editable</span><span
+                    class="en-only">30+ parameters, 5 editable Tick Mark columns, 8 editable enums</span></td>
+              </tr>
+              <tr>
+                <td>Text Fonts</td>
+                <td><span class="vi-only">8 cột Graphics/Text + Rename + Replace font</span><span class="en-only">8
+                    Graphics/Text columns + Rename + Replace font</span></td>
+              </tr>
+              <tr>
+                <td>Materials</td>
+                <td><span class="vi-only">Quản lý Material + Merge dialog</span><span class="en-only">Manage Materials +
+                    Merge dialog</span></td>
+              </tr>
+              <tr>
+                <td>Viewports</td>
+                <td><span class="vi-only">6 cột Graphics + inline edit (Title/LineWeight/Color/LinePattern)</span><span
+                    class="en-only">6 Graphics columns + inline edit (Title/LineWeight/Color/LinePattern)</span></td>
+              </tr>
+              <tr>
+                <td>View Filters</td>
+                <td>Filter Categories + rules</td>
+              </tr>
+              <tr>
+                <td>View Templates</td>
+                <td><span class="vi-only">Merge templates</span><span class="en-only">Merge templates</span></td>
+              </tr>
+              <tr>
+                <td>Scope Boxes</td>
+                <td>Scope Box list</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4><span class="vi-only">Tính năng chính</span><span class="en-only">Key features</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Cột Usage:</strong> đếm số element đang dùng style/type đó trong project;
+                click số Usage để xem/chọn nhanh các element liên quan trong Revit.</span><span
+                class="en-only"><strong>Usage column:</strong> counts elements currently using that style/type; click
+                the Usage number to see/select the related elements in Revit.</span></li>
+            <li><span class="vi-only"><strong>Multi-select bulk Delete/Merge:</strong> Ctrl/Shift + click chọn nhiều
+                dòng cùng lúc; <em>Merge</em> gộp nhiều style/type thành 1 (chuyển hết element đang dùng style cũ sang
+                style đích trước khi xoá style thừa) — dùng cho Filled Regions, Materials, View Templates.</span><span
+                class="en-only"><strong>Multi-select bulk Delete/Merge:</strong> Ctrl/Shift + click to select multiple
+                rows; <em>Merge</em> combines several styles/types into one (reassigning elements from the old style to
+                the target style before deleting the redundant one) — available for Filled Regions, Materials, View
+                Templates.</span></li>
+            <li><span class="vi-only"><strong>Inline edit:</strong> sửa trực tiếp trên DataGrid (Weight/Color/Pattern,
+                Tick Mark, thuộc tính Graphics của Viewport...) — Enter để commit, không cần mở dialog phụ.</span><span
+                class="en-only"><strong>Inline edit:</strong> edit values directly on the DataGrid (Weight/Color/Pattern,
+                Tick Mark, Viewport Graphics...) — press Enter to commit, no extra dialog needed.</span></li>
+            <li><span class="vi-only"><strong>Create/Duplicate:</strong> hầu hết tab hỗ trợ tạo mới hoặc nhân bản 1
+                style/type có sẵn làm điểm khởi đầu thay vì tạo từ đầu.</span><span class="en-only"><strong>Create/Duplicate:</strong>
+                most tabs support creating a new entry or duplicating an existing style/type as a starting point instead
+                of building from scratch.</span></li>
+            <li><span class="vi-only"><strong>Rename hàng loạt:</strong> tab Text Fonts có Rename + Replace font (đổi
+                toàn bộ TextNoteType đang dùng 1 font sang font khác).</span><span class="en-only"><strong>Bulk
+                  rename:</strong> the Text Fonts tab has Rename + Replace font (swap every TextNoteType using one font
+                for another).</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Mở project có nhiều style rác → click <strong>Style Manager</strong>.</span><span
+                class="en-only">Open a project with messy styles → click <strong>Style Manager</strong>.</span></li>
+            <li><span class="vi-only">Chọn tab cần dọn (vd <em>Object Styles</em>).</span><span class="en-only">Pick the
+                tab to clean (e.g. <em>Object Styles</em>).</span></li>
+            <li><span class="vi-only">Sort theo cột <em>Usage</em> → các style có Usage = 0 là rác.</span><span
+                class="en-only">Sort by the <em>Usage</em> column → entries with Usage = 0 are unused.</span></li>
+            <li><span class="vi-only">Multi-select bằng Ctrl/Shift + click → bấm <strong>Delete</strong> hoặc
+                <strong>Merge</strong>.</span><span class="en-only">Multi-select with Ctrl/Shift + click → click
+                <strong>Delete</strong> or <strong>Merge</strong>.</span></li>
+            <li><span class="vi-only">Inline edit trực tiếp ô (Weight/Color/Pattern) — Enter để commit.</span><span
+                class="en-only">Inline-edit cells directly (Weight/Color/Pattern) — Enter to commit.</span></li>
+          </ol>
+
+          <div class="card amber">
+            <p style="margin:0;">
+              <span class="vi-only"><strong>Lưu ý:</strong> Delete/Merge tác động trực tiếp lên project — nên kiểm tra
+                cột Usage trước khi xoá hàng loạt, và cân nhắc lưu 1 bản backup file <code>.rvt</code> trước khi dọn số
+                lượng lớn style/type.</span>
+              <span class="en-only"><strong>Note:</strong> Delete/Merge modifies the project directly — check the Usage
+                column before bulk deletes, and consider saving a backup <code>.rvt</code> before cleaning up a large
+                number of styles/types.</span>
+            </p>
+          </div>
+        </article>
+
+        <!-- FAMILY MANAGER -->
+        <article id="family-manager" data-img="screenshots/Family Manager.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#0EA5E9">F</div>
+            <div class="module-title">Family Manager <span class="en">/ Family Manager</span><span
+                class="panel">Manager</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Cửa sổ quản lý <strong>Family + FamilySymbol</strong> đang load — browse, đếm
+              Usage, rename, delete, replace type. 3 tab:</span>
+            <span class="en-only">Modeless window managing <strong>Families + FamilySymbols</strong> currently loaded —
+              browse, count Usage, rename, delete, replace types. 3 tabs:</span>
+          </p>
+          <ul>
+            <li><strong>System Families</strong> — <span class="vi-only">tường, sàn, mái, ống... (built-in)</span><span
+                class="en-only">walls, floors, roofs, pipes... (built-in)</span></li>
+            <li><strong>Loadable Families</strong> — <span class="vi-only">các file <code>.rfa</code> đã load vào
+                project</span><span class="en-only">all <code>.rfa</code> files loaded into the project</span></li>
+            <li><strong>In-Place Families</strong> — <span class="vi-only">family tạo trực tiếp trong project (không
+                phải file)</span><span class="en-only">families created in-place (no file)</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Tính năng chính</span><span class="en-only">Key features</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Browse + đếm Usage:</strong> mỗi tab liệt kê Family/Type kèm số lượng
+                Instance đang dùng trong project (per-type và tổng theo family), giúp phát hiện type dư thừa nạp nhầm
+                lúc load family.</span><span class="en-only"><strong>Browse + Usage count:</strong> each tab lists
+                Families/Types with the number of Instances using them (per-type and family totals), helping spot
+                redundant types accidentally loaded.</span></li>
+            <li><span class="vi-only"><strong>Rename:</strong> đổi tên Family Type trực tiếp trên danh sách, áp dụng
+                ngay cho toàn bộ Instance đang dùng type đó.</span><span class="en-only"><strong>Rename:</strong> rename
+                a Family Type directly from the list, applied immediately to every Instance using that type.</span></li>
+            <li><span class="vi-only"><strong>Delete:</strong> xoá Type/Family không còn Usage (Usage = 0) để dọn file
+                nhẹ hơn trước khi bàn giao hoặc archive.</span><span class="en-only"><strong>Delete:</strong> remove
+                Types/Families with zero Usage to trim the file before handover or archiving.</span></li>
+            <li><span class="vi-only"><strong>Replace type:</strong> chuyển toàn bộ Instance đang dùng 1 Type sang Type
+                khác (cùng Family hoặc khác Family/Category tương thích) — dùng khi cần đổi hàng loạt cửa/thiết bị sang
+                model chuẩn mới.</span><span class="en-only"><strong>Replace type:</strong> swap every Instance using
+                one Type for another (same family or a compatible different family/category) — useful when
+                standardizing doors/equipment to a new model in bulk.</span></li>
+          </ul>
+
+          <p><strong>Bulk Rename:</strong>
+            <span class="vi-only">multi-select nhiều type → dialog Bulk Rename hỗ trợ Prefix/Suffix/Replace.</span>
+            <span class="en-only">multi-select multiple types → Bulk Rename dialog supports
+              Prefix/Suffix/Replace.</span>
+          </p>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Click <strong>Family Manager</strong> → chọn tab tương ứng loại family cần
+                xử lý (System / Loadable / In-Place).</span><span class="en-only">Click <strong>Family Manager</strong>
+                → pick the tab for the family kind you need (System / Loadable / In-Place).</span></li>
+            <li><span class="vi-only">Sort theo cột Usage để tìm Type không còn dùng (Usage = 0).</span><span
+                class="en-only">Sort by the Usage column to find unused Types (Usage = 0).</span></li>
+            <li><span class="vi-only">Multi-select nhiều Type cùng nhóm → bấm <strong>Bulk Rename</strong> nếu cần đổi
+                tên theo quy tắc Prefix/Suffix/Replace, hoặc <strong>Delete</strong> để dọn rác.</span><span
+                class="en-only">Multi-select same-group Types → click <strong>Bulk Rename</strong> to rename by a
+                Prefix/Suffix/Replace rule, or <strong>Delete</strong> to clean up.</span></li>
+            <li><span class="vi-only">Dùng <strong>Replace type</strong> khi cần chuyển hàng loạt Instance từ Type cũ
+                sang Type mới trước khi xoá Type cũ.</span><span class="en-only">Use <strong>Replace type</strong> when
+                you need to migrate Instances from an old Type to a new one before deleting the old Type.</span></li>
+          </ol>
+        </article>
+
+        <!-- PARAMETER MANAGER -->
+        <article id="parameter-manager" data-img="screenshots/Parameter Manager.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#10B981">P</div>
+            <div class="module-title">Parameter Manager <span class="en">/ Parameter Manager</span><span
+                class="panel">Manager</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Quản lý Project / Shared / Instance / TXT Parameter trong 5 tab:</span>
+            <span class="en-only">Manage Project / Shared / Instance / TXT Parameters across 5 tabs:</span>
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Tab</th>
+                <th><span class="vi-only">Mục đích</span><span class="en-only">Purpose</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>By Type</td>
+                <td><span class="vi-only">Cây Category → Family → Type → Matrix (cột = các Type, hàng = parameter). Bulk
+                    apply giá trị giống nhau cho nhiều Type.</span><span class="en-only">Tree Category → Family → Type →
+                    Matrix (columns = Types, rows = parameters). Bulk-apply identical values across Types.</span></td>
+              </tr>
+              <tr>
+                <td>By Instance</td>
+                <td><span class="vi-only">Cây 4 cấp Category → Family → Type → Instance, matrix instance
+                    parameter.</span><span class="en-only">4-level tree Category → Family → Type → Instance,
+                    instance-parameter matrix.</span></td>
+              </tr>
+              <tr>
+                <td>Project Parameters</td>
+                <td><span class="vi-only">Project Parameter binding (Categories + Group + Type/Instance).</span><span
+                    class="en-only">Project Parameter binding (Categories + Group + Type/Instance).</span></td>
+              </tr>
+              <tr>
+                <td>Shared Parameters</td>
+                <td><span class="vi-only">Quản lý file <code>.txt</code> Shared Parameter.</span><span
+                    class="en-only">Manage the Shared Parameter <code>.txt</code> file.</span></td>
+              </tr>
+              <tr>
+                <td>TXT</td>
+                <td><span class="vi-only">Raw editor file Shared Parameters TXT — detect encoding, giữ format
+                    gốc.</span><span class="en-only">Raw editor for the Shared Parameters TXT — detects encoding,
+                    preserves format.</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4><span class="vi-only">Tính năng chính</span><span class="en-only">Key features</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Bulk apply theo Type (By Type):</strong> chọn nhiều cột Type cùng lúc trên
+                ma trận → ghi cùng 1 giá trị parameter cho tất cả, thay vì mở từng Type Properties.</span><span
+                class="en-only"><strong>Bulk apply by Type (By Type):</strong> select multiple Type columns on the
+                matrix → write the same parameter value to all of them, instead of opening each Type Properties
+                dialog.</span></li>
+            <li><span class="vi-only"><strong>Sửa Instance hàng loạt (By Instance):</strong> ma trận 4 cấp cho phép sửa
+                parameter của nhiều Instance riêng lẻ (không share theo Type) cùng lúc, ví dụ Mark hoặc Comments theo
+                từng cấu kiện.</span><span class="en-only"><strong>Bulk instance edit (By Instance):</strong> the
+                4-level matrix lets you edit per-instance parameters (not shared by Type) at once — e.g. Mark or
+                Comments per individual element.</span></li>
+            <li><span class="vi-only"><strong>Project Parameters:</strong> xem/sửa binding của Project Parameter — đổi
+                nhóm Category đang binding, đổi Group hiển thị, hoặc chuyển Type ↔ Instance mà không cần xoá tạo
+                lại.</span><span class="en-only"><strong>Project Parameters:</strong> view/edit a Project Parameter's
+                binding — change which Categories it's bound to, its display Group, or switch Type ↔ Instance without
+                deleting and recreating it.</span></li>
+            <li><span class="vi-only"><strong>Shared Parameters + TXT:</strong> quản lý file Shared Parameter dùng
+                chung cho nhiều project; tab TXT cho phép sửa trực tiếp nội dung file thô khi cần thao tác nằm ngoài UI
+                chuẩn của Revit (xoá param/group, sửa GUID...).</span><span class="en-only"><strong>Shared Parameters +
+                  TXT:</strong> manage the Shared Parameter file used across projects; the TXT tab allows direct raw
+                edits for operations outside Revit's standard UI (removing a param/group, editing a GUID...).</span>
+            </li>
+          </ul>
+        </article>
+
+        <article id="schedule-manager" data-img="screenshots/Schedule Manager.png" class="module-card wip">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#F97316">SM</div>
+            <div class="module-title">Schedule Manager <span class="en">/ Schedule Manager</span><span
+                class="panel">Manager</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Cửa sổ để quản lý toàn bộ <strong>ViewSchedule</strong> trong project. Xem
+              nhanh Fields, Filters, Sort/Group, Formatting, Appearance; đồng thời rename, xoá, ẩn/hiện field để dọn hệ
+              schedule.</span>
+            <span class="en-only">A modeless window for managing all <strong>ViewSchedules</strong> in the project.
+              Inspect Fields, Filters, Sort/Group, Formatting, and Appearance; rename, delete, and toggle field
+              visibility to clean up the schedule set.</span>
+          </p>
+          <ul>
+            <li><span class="vi-only"><strong>Audit nhanh:</strong> xác định schedule nào dư thừa hoặc đặt tên chưa
+                chuẩn.</span><span class="en-only"><strong>Quick audit:</strong> identify redundant or poorly named
+                schedules.</span></li>
+            <li><span class="vi-only"><strong>Review cấu hình:</strong> xem logic filter/sort mà không phải mở từng
+                schedule riêng lẻ.</span><span class="en-only"><strong>Configuration review:</strong> inspect
+                filter/sort logic without opening each schedule one by one.</span></li>
+            <li><span class="vi-only"><strong>Dọn field:</strong> ẩn field phụ trợ nhưng vẫn giữ dữ liệu cho filter/sort
+                nếu cần.</span><span class="en-only"><strong>Field cleanup:</strong> hide helper fields while keeping
+                them for filtering/sorting if needed.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Giao diện 2 panel</span><span class="en-only">2-panel layout</span></h4>
+          <p>
+            <span class="vi-only"><strong>Trái:</strong> danh sách toàn bộ ViewSchedule trong project kèm ô tìm kiếm
+              (SearchBox) để lọc nhanh theo tên. <strong>Phải:</strong> TabControl 5 tab chi tiết cho schedule đang
+              chọn.</span>
+            <span class="en-only"><strong>Left:</strong> a list of every ViewSchedule in the project with a SearchBox
+              to filter by name. <strong>Right:</strong> a 5-tab TabControl with details for the selected
+              schedule.</span>
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Tab</th>
+                <th><span class="vi-only">Nội dung</span><span class="en-only">Content</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Fields</td>
+                <td><span class="vi-only">Danh sách field đang hiển thị trong schedule — toggle ẩn/hiện, sửa tiêu đề
+                    cột (Column Heading), gỡ field không cần.</span><span class="en-only">Fields shown in the schedule
+                    — toggle visibility, edit the Column Heading, or remove a field.</span></td>
+              </tr>
+              <tr>
+                <td>Filters</td>
+                <td><span class="vi-only">Danh sách điều kiện lọc đang áp dụng lên schedule; gỡ bỏ điều kiện không còn
+                    phù hợp.</span><span class="en-only">Filter conditions applied to the schedule; remove any that no
+                    longer apply.</span></td>
+              </tr>
+              <tr>
+                <td>Sort/Group</td>
+                <td><span class="vi-only">Quy tắc sắp xếp và gom nhóm dòng dữ liệu; gỡ bỏ 1 cấp sort/group nếu
+                    thừa.</span><span class="en-only">Row sort and grouping rules; remove a sort/group level if
+                    redundant.</span></td>
+              </tr>
+              <tr>
+                <td>Formatting</td>
+                <td><span class="vi-only">Định dạng số/text từng field (Hiển thị theo đơn vị, làm tròn,
+                    prefix/suffix...).</span><span class="en-only">Number/text formatting per field (unit display,
+                    rounding, prefix/suffix...).</span></td>
+              </tr>
+              <tr>
+                <td>Appearance</td>
+                <td><span class="vi-only">Giao diện xuất/hiển thị của bảng (Grid Lines, tiêu đề, font, tổng
+                    cộng...).</span><span class="en-only">The table's export/display appearance (Grid Lines, title,
+                    font, totals...).</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Click <strong>Schedule Manager</strong> → dùng SearchBox bên trái để tìm schedule
+                nghi ngờ dư thừa hoặc đặt tên sai.</span><span class="en-only">Click <strong>Schedule
+                  Manager</strong> → use the left SearchBox to find a schedule suspected of being redundant or
+                misnamed.</span></li>
+            <li><span class="vi-only">Chọn schedule → xem nhanh 5 tab bên phải để hiểu cấu hình (Fields đang hiện gì,
+                Filter nào đang áp, Sort/Group ra sao) mà không cần mở schedule trong Revit.</span><span
+                class="en-only">Select the schedule → scan the 5 tabs on the right to understand its setup (which
+                Fields are shown, which Filters apply, how it's sorted/grouped) without opening it in Revit.</span></li>
+            <li><span class="vi-only">Rename nếu tên chưa chuẩn, hoặc Delete nếu schedule không còn dùng.</span><span
+                class="en-only">Rename it if the name doesn't follow convention, or Delete it if no longer
+                needed.</span></li>
+            <li><span class="vi-only">Ở tab Fields, ẩn field phụ trợ (vẫn giữ để filter/sort) hoặc gỡ hẳn field/filter/sort-group
+                thừa.</span><span class="en-only">On the Fields tab, hide helper fields (kept for filter/sort) or
+                remove a redundant field/filter/sort-group entirely.</span></li>
+          </ol>
+        </article>
+      </section>
+
+      <!-- ============ PANEL UTILITY ============ -->
+      <section id="panel-utility">
+        <h2>7. Panel · Utility</h2>
+        <p>
+          <span class="vi-only">Panel Utility gom các công cụ thao tác nhanh trên element và annotation: chọn lọc, ghi
+            parameter, kiểm tra hidden element, chỉnh Filled Region và Text Note.</span>
+          <span class="en-only">The Utility panel groups quick tools for element and annotation workflows: selection,
+            parameter writing, hidden-element checks, Filled Region management, and Text Note layout.</span>
+        </p>
+        <article id="quick-select" data-img="screenshots/Quick Select.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#0EA5E9">Q</div>
+            <div class="module-title">Quick Select <span class="en">/ Quick Select</span><span
+                class="panel">Utility</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Cửa sổ để <strong>chọn nhanh element</strong> theo cây phân cấp
+              <em>Category → Family → Type → Instance</em>. Khi tick/untick checkbox, selection trong Revit được cập
+              nhật
+              tự động sau một nhịp debounce ngắn (live selection).</span>
+            <span class="en-only">A modeless window for <strong>quick element selection</strong> through the
+              <em>Category → Family → Type → Instance</em> tree. When you tick/untick checkboxes, the Revit selection is
+              updated automatically after a short debounce (live selection).</span>
+          </p>
+
+          <h4><span class="vi-only">Tính năng chính</span><span class="en-only">Key features</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Tri-state checkbox</strong> — tick Type tự tick mọi Instance bên dưới;
+                tick một phần Type → header tri-state (mix).</span><span class="en-only"><strong>Tri-state
+                  checkboxes</strong> — ticking a Type ticks all its Instances; partial selection puts the header into
+                the mixed state.</span></li>
+            <li><span class="vi-only"><strong>Scope</strong> — 2 radio ở góc phải header: <em>Active View</em> và
+                <em>All View</em> (toàn project). Đổi scope sẽ reload lại cây và đếm lại số instance; chuyển sang
+                <em>All View</em> tự động reset Category type filter về mặc định <em>Model only</em>.</span><span
+                class="en-only"><strong>Scope</strong> — 2 radio buttons in the top-right header: <em>Active
+                  View</em> and <em>All View</em> (whole project). Changing the scope reloads the tree and re-counts
+                instances; switching to <em>All View</em> automatically resets the Category type filter back to
+                <em>Model only</em>.</span></li>
+            <li><span class="vi-only"><strong>Search box</strong> — gõ để lọc cây theo tên, kết hợp với popup phạm vi
+                tìm kiếm gồm <em>Category / Family / Type / Element</em>.</span><span class="en-only"><strong>Search
+                  box</strong> — type to filter the tree, with a search-scope popup for <em>Category / Family / Type /
+                  Element</em>.</span></li>
+            <li><span class="vi-only"><strong>Category type filter</strong> — popup 5 loại: <em>Model / Annotation /
+                  Analytical / Imported / Revit Links</em>. Khi ở Active View, tool có thể hiện đủ các loại category
+                đang
+                có trong view.</span><span class="en-only"><strong>Category-type filter</strong> — a popup with 5
+                kinds: <em>Model / Annotation / Analytical / Imported / Revit Links</em>. In Active View mode, the tool
+                can expose all category kinds present in the view.</span></li>
+            <li><span class="vi-only"><strong>Selection Mode</strong> — 2 radio <em>Or / And</em> để xác định cách gộp
+                các node đang tick.</span><span class="en-only"><strong>Selection Mode</strong> — 2 radio options,
+                <em>Or / And</em>, that control how checked nodes are combined.</span></li>
+            <li><span class="vi-only"><strong>Reload</strong> — tải lại dữ liệu cây, đồng thời reset tìm kiếm để quay về
+                trạng thái gọn ban đầu.</span><span class="en-only"><strong>Reload</strong> — reloads the tree data and
+                resets search back to the compact initial state.</span></li>
+            <li><span class="vi-only"><strong>OK / Hủy</strong> — <em>OK</em> giữ selection hiện tại và đóng cửa sổ;
+                <em>Hủy</em> hoặc đóng bằng nút X sẽ khôi phục selection ban đầu lúc mở tool.</span><span
+                class="en-only"><strong>OK / Cancel</strong> — <em>OK</em> keeps the current selection and closes the
+                window; <em>Cancel</em> or closing with X restores the original selection captured when the tool was
+                opened.</span></li>
+          </ul>
+        </article>
+
+        <article id="set-parameter" data-img="screenshots/Set Parameter.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#8B5CF6">SP</div>
+            <div class="module-title">Set Parameter <span class="en">/ Set Parameter</span><span
+                class="panel">Utility</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Ghi giá trị parameter hàng loạt cho nhóm element theo 3 mode: <strong>Set
+                Value</strong>, <strong>Replace Text</strong>, <strong>Copy A→B</strong>. Hỗ trợ Preview trước khi Apply
+              và Isolate để kiểm tra trực quan.</span>
+            <span class="en-only">Bulk-write parameter values for a group of elements in 3 modes: <strong>Set
+                Value</strong>, <strong>Replace Text</strong>, and <strong>Copy A→B</strong>. Supports Preview before
+              Apply and Isolate for visual checking.</span>
+          </p>
+
+          <h4>3 mode</h4>
+          <table style="overflow:visible">
+            <thead>
+              <tr>
+                <th>Mode</th>
+                <th><span class="vi-only">Mô tả</span><span class="en-only">Description</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Set Value</td>
+                <td><span class="vi-only">Gán 1 giá trị cố định vào parameter đích cho toàn bộ element đã lọc. Hỗ trợ cả
+                    Text, Integer/Yes-No và Number/Length (parse theo đơn vị hiện tại của document, chấp nhận cả dấu
+                    chấm và dấu phẩy thập phân, ví dụ <code>500 mm</code>).</span><span class="en-only">Assigns one
+                    fixed value to the destination parameter for every filtered element. Supports Text, Integer/Yes-No,
+                    and Number/Length (parsed using the document's current units, accepting both dot and comma decimal
+                    separators, e.g. <code>500 mm</code>).</span></td>
+              </tr>
+              <tr>
+                <td>Replace Text</td>
+                <td><span class="vi-only">Tìm & thay 1 chuỗi con trong giá trị hiện tại của parameter — áp dụng được cho
+                    cả Text lẫn Integer/Number (so khớp trên chuỗi hiển thị rồi convert lại). Dòng nào không khớp chuỗi
+                    cần tìm sẽ bị đánh dấu <em>Skipped</em>.</span><span class="en-only">Find & replace a substring in
+                    the parameter's current value — works for both Text and Integer/Number (matches on the display
+                    string, then converts back). Rows with no match are marked <em>Skipped</em>.</span></td>
+              </tr>
+              <tr>
+                <td>Copy A→B</td>
+                <td><span class="vi-only">Copy giá trị từ Parameter A (nguồn, chỉ cần đọc được — mọi kiểu) sang
+                    Parameter B (đích, phải ghi được). Cùng kiểu dữ liệu → copy trực tiếp; khác kiểu → tự convert qua
+                    chuỗi hiển thị (unit-aware); không convert được → <em>Skipped</em>.</span><span class="en-only">Copy
+                    the value from Parameter A (source, only needs to be readable — any type) to Parameter B
+                    (destination, must be writable). Same data type → direct copy; different types → auto-convert via
+                    the display string (unit-aware); if conversion fails → <em>Skipped</em>.</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only"><strong>Scope + Filter cascade</strong> — chọn phạm vi (Active View / Document /
+                Selection) rồi lọc theo 3 tầng Categories → Families → Types như Smart Naming.</span><span
+                class="en-only"><strong>Scope + cascade filter</strong> — choose the scope (Active View / Document /
+                Selection), then filter through the 3 Categories → Families → Types tiers, same as Smart
+                Naming.</span></li>
+            <li><span class="vi-only">Chọn <strong>mode</strong> thao tác (Set Value / Replace Text / Copy A→B) và
+                parameter đích (chỉ hiện parameter ghi được trên các Type đã tick).</span><span class="en-only">Pick the
+                <strong>mode</strong> (Set Value / Replace Text / Copy A→B) and the destination parameter (only
+                writable parameters on ticked Types are listed).</span></li>
+            <li><span class="vi-only">Nhập giá trị/chuỗi tìm-thay/parameter nguồn tương ứng với mode đã chọn.</span><span
+                class="en-only">Enter the value/find-replace strings/source parameter matching the selected
+                mode.</span></li>
+            <li><span class="vi-only">Bấm <strong>Run Preview</strong> — bảng preview 8 cột hiển thị giá trị cũ/mới cho
+                từng element và trạng thái (Ready / Skipped / kèm lý do). Dùng <strong>Isolate</strong> để xem trực quan
+                tập element trong Revit trước khi ghi.</span><span class="en-only">Click <strong>Run Preview</strong> —
+                an 8-column preview table shows the old/new value for each element and its status (Ready / Skipped with
+                a reason). Use <strong>Isolate</strong> to visually check the element set in Revit before
+                writing.</span></li>
+            <li><span class="vi-only">Bấm <strong>Apply</strong> để ghi dữ liệu — chỉ ghi các dòng ở trạng thái Ready,
+                dòng Skipped bị bỏ qua; lỗi ở 1 dòng không làm hỏng transaction của các dòng khác.</span><span
+                class="en-only">Click <strong>Apply</strong> to write the data — only Ready rows are written, Skipped
+                rows are ignored; an error on one row does not abort the transaction for the others.</span></li>
+          </ol>
+        </article>
+
+        <article id="element-hide" data-img="screenshots/Element Hide.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#EF4444">EH</div>
+            <div class="module-title">Element Hide <span class="en">/ Element Hide</span><span
+                class="panel">Utility</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Quét model hiện tại để tìm các element đang bị ẩn và hỗ trợ unhide nhanh. Phù hợp khi
+              cần kiểm tra vì sao view thiếu đối tượng hoặc dọn các hide thao tác tay còn sót.</span>
+            <span class="en-only">Scans the current model for hidden elements and helps unhide them quickly. Useful when
+              a view seems to miss objects or when temporary manual hides were forgotten.</span>
+          </p>
+
+          <h4><span class="vi-only">Bố cục</span><span class="en-only">Layout</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Danh sách kết quả:</strong> mỗi dòng là 1 element đang bị ẩn trong project, cho biết Category, View và Sheet đang ẩn element đó.</span><span class="en-only"><strong>Results list:</strong> each row is a hidden element in the project, showing the Category, View, and Sheet where it is hidden.</span></li>
+            <li><span class="vi-only"><strong>Unhide:</strong> chọn 1 hoặc nhiều dòng rồi bấm Unhide để hiện lại.</span><span class="en-only"><strong>Unhide:</strong> select one or more rows then click Unhide to restore them.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Click <strong>Element Hide</strong> → tool tự quét toàn project theo batch, hiển
+                thị progress.</span><span class="en-only">Click <strong>Element Hide</strong> → the tool scans the
+                whole project in batches, showing progress.</span></li>
+            <li><span class="vi-only">Dùng cascading filter để thu hẹp theo Category, View hoặc Sheet đang nghi
+                vấn.</span><span class="en-only">Use the cascading filter to narrow down by Category, View, or the
+                Sheet in question.</span></li>
+            <li><span class="vi-only">Multi-select các dòng cần hiện lại → bấm <strong>Unhide</strong>.</span><span
+                class="en-only">Multi-select the rows to restore → click <strong>Unhide</strong>.</span></li>
+          </ol>
+        </article>
+
+        <article id="fill-region" data-img="screenshots/Fill Region.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#8B5CF6">FR</div>
+            <div class="module-title">Fill Region <span class="en">/ Fill Region</span><span
+                class="panel">Utility</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Quản lý line style của <strong>Filled Region</strong> hàng loạt. Dùng khi cần đồng bộ
+              nét bao giữa nhiều region type hoặc kiểm tra style đang lệch chuẩn bản vẽ.</span>
+            <span class="en-only">Bulk-manages <strong>Filled Region</strong> line styles. Use it to standardize region
+              borders across many region types or audit drawing-style inconsistencies.</span>
+          </p>
+
+          <h4>2 tab</h4>
+          <table>
+            <thead>
+              <tr>
+                <th>Tab</th>
+                <th><span class="vi-only">Nội dung</span><span class="en-only">Content</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Filled Regions</td>
+                <td><span class="vi-only">Quét toàn project hoặc chỉ Active View, liệt kê từng Filled Region kèm cột
+                    <em>ElementId, Region Type, Line Style, FG/BG Pattern, FG/BG Color, Masking, View, View Type,
+                      Sheet</em>.</span><span class="en-only">Scans the whole project or just the Active View, listing
+                    each Filled Region with columns <em>ElementId, Region Type, Line Style, FG/BG Pattern, FG/BG Color,
+                      Masking, View, View Type, Sheet</em>.</span></td>
+              </tr>
+              <tr>
+                <td>Boundary Lines</td>
+                <td><span class="vi-only">Chi tiết từng đường biên (boundary curve) con của các Filled Region đang
+                    chọn ở tab trên — cho phép sửa Line Style riêng của từng cạnh biên nếu region có nhiều loại nét
+                    trộn lẫn.</span><span class="en-only">Detail of each boundary curve belonging to the Filled Regions
+                    selected in the tab above — lets you edit the Line Style of an individual edge when a region mixes
+                    multiple line types.</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Chọn phạm vi quét (Active View hoặc toàn project) → tool liệt kê tất cả Filled Region.</span><span class="en-only">Choose scan scope (Active View or whole project) → the tool lists all Filled Regions.</span></li>
+            <li><span class="vi-only">Dùng cascading filter ở tab <strong>Filled Regions</strong> để tìm region lệch chuẩn theo Line Style, Region Type hoặc View.</span><span class="en-only">Use the cascading filter in the <strong>Filled Regions</strong> tab to spot regions with a non-standard Line Style, Region Type, or View.</span></li>
+            <li><span class="vi-only">Multi-select các region cần sửa → đổi Line Style để đồng bộ nét bao.</span><span class="en-only">Multi-select the regions to fix → change the Line Style to standardize their borders.</span></li>
+            <li><span class="vi-only">(Tuỳ chọn) Chuyển sang tab <strong>Boundary Lines</strong> để sửa nét riêng từng cạnh biên của region.</span><span class="en-only">(Optional) Switch to the <strong>Boundary Lines</strong> tab to edit the line style of individual boundary edges.</span></li>
+          </ol>
+        </article>
+
+        <article id="space-text-note" data-img="screenshots/Space Text Note.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#F97316">ST</div>
+            <div class="module-title">Space Text Note <span class="en">/ Space Text Note</span><span
+                class="panel">Utility</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Dàn khoảng cách, căn chỉnh và xử lý leader cho <strong>Text Note</strong>. Hữu ích khi
+              hoàn thiện sheet nhiều ghi chú, tránh chữ chồng lấn và làm sạch bố cục annotation.</span>
+            <span class="en-only">Spaces, aligns, and manages leaders for <strong>Text Notes</strong>. Useful when
+              polishing sheets with many notes, reducing overlaps, and cleaning annotation layouts.</span>
+          </p>
+
+          <h4><span class="vi-only">Tính năng chính</span><span class="en-only">Key features</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Dàn khoảng cách (Space):</strong> chọn nhiều Text Note → dàn đều khoảng
+                cách theo trục ngang/dọc (<em>axis-aligned</em>) hoặc theo 1 góc bất kỳ (<em>arbitrary angle</em>) khi
+                các ghi chú nằm xiên theo cấu kiện.</span><span class="en-only"><strong>Space:</strong> select several
+                Text Notes → distribute them evenly along the horizontal/vertical axis (<em>axis-aligned</em>) or along
+                an arbitrary angle when notes run diagonally along an element.</span></li>
+            <li><span class="vi-only"><strong>Căn chỉnh (Align):</strong> popup menu với các mode <em>Left / Right /
+                  Top / Bottom / AngleLeft / AngleRight</em>.</span><span class="en-only"><strong>Align:</strong> a
+                popup menu with modes <em>Left / Right / Top / Bottom / AngleLeft / AngleRight</em>.</span></li>
+            <li><span class="vi-only"><strong>Leader Attachment:</strong> đổi điểm bám (attachment) của leader — vd
+                chuyển từ bám giữa dòng chữ sang bám đầu/cuối dòng — để leader trỏ đúng vị trí mong muốn.</span><span
+                class="en-only"><strong>Leader Attachment:</strong> change where the leader attaches to the text — e.g.
+                switch from attaching at the middle of the text to the top/bottom — so the leader points where you
+                want.</span></li>
+            <li><span class="vi-only"><strong>Add Leader:</strong> thêm nhanh 1 leader mới cho Text Note đã chọn mà
+                không cần vào Properties/Modify tab của Revit.</span><span class="en-only"><strong>Add Leader:</strong>
+                quickly add a new leader to a selected Text Note without going through Revit's
+                Properties/Modify tab.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Click <strong>Space Text Note</strong> → pick các Text Note cần xử lý trực tiếp
+                trong Revit.</span><span class="en-only">Click <strong>Space Text Note</strong> → pick the Text Notes
+                to process directly in Revit.</span></li>
+            <li><span class="vi-only">Bấm nút <strong>Space</strong> để dàn khoảng cách đều, hoặc mở popup
+                <strong>Align</strong> để chọn mode căn chỉnh phù hợp.</span><span class="en-only">Click
+                <strong>Space</strong> to distribute them evenly, or open the <strong>Align</strong> popup to pick a
+                suitable alignment mode.</span></li>
+            <li><span class="vi-only">Nếu cần chỉnh leader, dùng popup <strong>Leader Attachment</strong> hoặc
+                <strong>Add Leader</strong>.</span><span class="en-only">If leaders need adjusting, use the
+                <strong>Leader Attachment</strong> or <strong>Add Leader</strong> popup.</span></li>
+          </ol>
+        </article>
+
+        <article id="smart-naming" data-img="screenshots/Smart Naming.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#10B981">S</div>
+            <div class="module-title">Smart Naming <span class="en">/ Smart Naming</span><span
+                class="panel">Utility</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Đánh số / đặt tên <strong>instance parameter</strong> của element theo 3 mode đang
+              hoạt động (Manual / Crossing / Auto). Áp dụng cho mọi Category (cửa, cửa sổ, thiết bị, cọc, room,
+              view...).</span>
+            <span class="en-only">Number / name <strong>instance parameters</strong> of elements using the 3 active
+              modes (Manual / Crossing / Auto). Works for any Category (doors, windows, equipment, piles, rooms,
+              views...).</span>
+          </p>
+
+          <h4><span class="vi-only">3 mode đánh số</span><span class="en-only">3 numbering modes</span></h4>
+          <table>
+            <thead>
+              <tr>
+                <th>Mode</th>
+                <th><span class="vi-only">Cách dùng</span><span class="en-only">Usage</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Manual</td>
+                <td><span class="vi-only">Click từng element theo thứ tự. Mỗi pick = 1 sub-transaction → có thể Ctrl+Z
+                    lùi từng bước. Esc để kết thúc.</span><span class="en-only">Click elements in order. Each pick = a
+                    sub-transaction → Ctrl+Z rolls back step-by-step. Esc to finish.</span></td>
+              </tr>
+              <tr>
+                <td>Crossing</td>
+                <td><span class="vi-only">Pick 1 detail/model line → element có centroid gần line (trong tolerance, ô
+                    tolerance mm nhập trực tiếp trên form) được sort theo distance từ điểm đầu line.</span><span
+                    class="en-only">Pick a detail/model line → elements whose centroid is within tolerance (a mm
+                    tolerance box on the form) are sorted by distance from the line start.</span></td>
+              </tr>
+              <tr>
+                <td>Auto</td>
+                <td><span class="vi-only">Sort toàn bộ candidate theo danh sách quy tắc sort động (Axis X/Y/Z +
+                    Tăng/Giảm dần) — thêm/bớt quy tắc trực tiếp trên form để tạo chuỗi sort nhiều cấp (vd X trước, Y
+                    sau).</span><span class="en-only">Sort every candidate through a dynamic sort-rule list (Axis X/Y/Z
+                    + Ascending/Descending) — add/remove rules directly on the form to build a multi-level sort chain
+                    (e.g. X first, then Y).</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only"><strong>Scope</strong> — ComboBox 3 lựa chọn: <em>Toàn Model / Active View /
+                  Selection hiện tại</em>, kèm nút <strong>Refresh</strong> cạnh bên.</span><span
+                class="en-only"><strong>Scope</strong> — a 3-option ComboBox: <em>Whole Model / Active View / Current
+                  Selection</em>, with a <strong>Refresh</strong> button next to it.</span></li>
+            <li><span class="vi-only"><strong>Filter cascade</strong> — 3 Expander ListBox checkbox: Categories →
+                Families → Types (tri-state header, search box, "Ẩn ... chưa tick"; mặc định chỉ Expander Categories
+                mở sẵn, 2 Expander còn lại thu gọn).</span><span
+                class="en-only"><strong>Cascade filter</strong> — 3 Expander ListBoxes: Categories → Families → Types
+                (tri-state header, search box, "Hide unticked"; only the Categories Expander is open by default, the
+                other two are collapsed).</span></li>
+            <li><span class="vi-only"><strong>Define Value</strong> — chọn Parameter đích (giao writable Text/Integer
+                của các Type đã tick) + Prefix + Start + Step + Suffix. <em>Digits</em> tự suy ra từ độ dài Start (giữ
+                leading zero) — không có ô Digits riêng.</span><span class="en-only"><strong>Define Value</strong> —
+                pick the destination Parameter (intersection of writable Text/Integer of ticked Types) + Prefix +
+                Start + Step + Suffix. <em>Digits</em> is inferred from the length of Start (preserves leading zeros)
+                — there is no separate Digits input.</span></li>
+            <li><span class="vi-only">Tick <em>Use Rules</em> nếu muốn dùng template token nâng cao
+                (<code>{Counter}</code> / <code>{Counter:000}</code> / <code>{Level}</code> / <code>{Type}</code> /
+                <code>{Family}</code> / <code>{Category}</code> / <code>{ParamName}</code>) → bấm nút <strong>Build
+                  template</strong> để mở dialog <em>Rules Builder</em> soạn chuỗi token.</span><span
+                class="en-only">Tick <em>Use Rules</em> to use advanced template tokens (<code>{Counter}</code> /
+                <code>{Counter:000}</code> / <code>{Level}</code> / <code>{Type}</code> / <code>{Family}</code> /
+                <code>{Category}</code> / <code>{ParamName}</code>) → click <strong>Build template</strong> to open the
+                <em>Rules Builder</em> dialog and compose the token string.</span></li>
+            <li><span class="vi-only"><strong>Mode</strong> — chọn 1 trong 3 nút Manual/Crossing/Auto.</span><span
+                class="en-only"><strong>Mode</strong> — pick one of the 3 Manual/Crossing/Auto buttons.</span></li>
+            <li><span class="vi-only">Bấm nút <strong>Preview</strong> (cột bên) để mở/đóng bảng Preview hiển thị
+                element + giá trị sẽ ghi. Cột <em>New</em> ở chế độ <strong>chỉ đọc</strong> — không sửa trực tiếp
+                trên bảng được, muốn đổi giá trị thì chỉnh lại Prefix/Start/Step/Suffix hoặc Rules rồi Preview
+                lại.</span><span class="en-only">Click the side <strong>Preview</strong> toggle to expand/collapse the
+                Preview table showing elements + the value to be written. The <em>New</em> column is
+                <strong>read-only</strong> — it cannot be edited directly in the grid; to change a value, adjust
+                Prefix/Start/Step/Suffix or Rules and preview again.</span></li>
+            <li><span class="vi-only">Bấm <strong>Run</strong> để chạy mode đã chọn (Manual sẽ chuyển sang chế độ pick
+                trong Revit), sau đó bấm <strong>Apply</strong> để ghi parameter. <strong>Reset</strong> xoá preview
+                hiện tại, <strong>Close</strong> đóng cửa sổ.</span><span class="en-only">Click <strong>Run</strong> to
+                execute the selected mode (Manual switches to pick mode in Revit), then click <strong>Apply</strong>
+                to write the parameter. <strong>Reset</strong> clears the current preview, <strong>Close</strong>
+                closes the window.</span></li>
+          </ol>
+
+          <h4>Toolbox</h4>
+          <ul>
+            <li><strong>Isolate / Unisolate</strong> — <span class="vi-only">isolate element trong view hiện tại (kèm
+                IndependentTag từ Revit 2023+).</span><span class="en-only">isolate elements in the active view (with
+                IndependentTag from Revit 2023+).</span></li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- ============ PANEL EXCEL ============ -->
+      <section id="panel-excel">
+        <h2>8. Panel · Excel</h2>
+        <article id="excel-link" data-img="screenshots/Excel Link.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#0EA5E9">X</div>
+            <div class="module-title">Excel Link <span class="en">/ Excel Link</span><span class="panel">Excel</span>
+            </div>
+          </div>
+          <p>
+            <span class="vi-only">Nút <strong>Excel Link</strong> mở cửa sổ quản lý link bảng Excel trong
+              project. Ở ribbon hiện tại, cửa sổ này có <strong>2 tab chính</strong>:</span>
+            <span class="en-only">The <strong>Excel Link</strong> button opens a window for managing Excel
+              table links in the project. In the current ribbon, this window has <strong>2 main tabs</strong>:</span>
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Tab</th>
+                <th><span class="vi-only">Chức năng</span><span class="en-only">Function</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Links</td>
+                <td><span class="vi-only">Quản lý toàn bộ Excel link đang active trong project — DataGrid liệt kê từng
+                    bảng đã insert, thao tác qua 2 dropdown gộp nhóm và các cột editable inline.</span><span
+                    class="en-only">Manage every active Excel link in the project — a DataGrid lists each inserted
+                    table, operated through 2 grouped dropdowns and inline-editable columns.</span></td>
+              </tr>
+              <tr>
+                <td>Table Styles</td>
+                <td><span class="vi-only">Preset style cho FilledRegion table render (font, border, fill, padding) —
+                    dùng lại khi insert bảng mới.</span><span class="en-only">Style presets for FilledRegion table
+                    rendering (font, border, fill, padding) — reusable when inserting new tables.</span></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h4><span class="vi-only">Tab Links — chi tiết</span><span class="en-only">Links tab — details</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Dropdown Add Tables:</strong> 4 lựa chọn — <em>Add from Excel</em>,
+                <em>Add multi from Excel</em>, <em>Add from Folder</em>, <em>Add from
+                  Clipboard</em>.</span><span class="en-only"><strong>Add Tables dropdown:</strong> 4 options —
+                <em>Add from Excel</em> (insert 1 table from an Excel file), <em>Add multi from Excel</em> (insert
+                several tables at once from 1 file), <em>Add from Folder</em> (scan a whole folder), <em>Add from
+                  Clipboard</em> (paste a table copied from Excel/Google Sheets/LibreOffice).</span></li>
+            <li><span class="vi-only"><strong>Dropdown Batch Actions:</strong> áp dụng cho các dòng đang chọn —
+                <em>Batch Reload</em> / <em>Reload All</em>, <em>Go To</em>,
+                <em>Open Source</em> / <em>Open Folder</em>, <em>Relocate</em> /
+                <em>Relocate Folder</em>, <em>Detach</em>, <em>Remove</em>.</span><span
+                class="en-only"><strong>Batch Actions dropdown:</strong> applies to the selected rows —
+                <em>Batch Reload</em> / <em>Reload All</em>, <em>Go To</em> (jump to the table's location in the view),
+                <em>Open Source</em> / <em>Open Folder</em> (open the source Excel file/folder), <em>Relocate</em> /
+                <em>Relocate Folder</em> (re-point the source file/folder path after it was moved), <em>Detach</em>
+                (break the link but keep the table), <em>Remove</em> (delete the table + link entirely).</span></li>
+            <li><span class="vi-only"><strong>Nút Refresh</strong> riêng để quét lại toàn bộ trạng thái link (không
+                nằm trong 2 dropdown trên).</span><span class="en-only">A standalone <strong>Refresh</strong> button
+                rescans all link statuses (separate from the 2 dropdowns above).</span></li>
+            <li><span class="vi-only"><strong>Cột Auto</strong> trên mỗi dòng — checkbox bật/tắt Auto-Sync riêng cho
+                từng bảng, thay vì 1 công tắc auto-refresh chung cho toàn cửa sổ.</span><span class="en-only"><strong>Auto
+                  column</strong> on each row — a per-table checkbox toggling Auto-Sync individually, rather than one
+                global auto-refresh switch for the whole window.</span></li>
+            <li><span class="vi-only"><strong>Cột editable inline:</strong> Sheet, Range, Preset (Table Style), Scale
+                có thể sửa trực tiếp ngay trên DataGrid mà không cần mở lại dialog insert.</span><span
+                class="en-only"><strong>Inline-editable columns:</strong> Sheet, Range, Preset (Table Style), and Scale
+                can be edited directly on the DataGrid without reopening the insert dialog.</span></li>
+            <li><span class="vi-only">Search box lọc theo tên bảng/đường dẫn, nút trạng thái "?" giải thích ý nghĩa các
+                badge Status, và nút mở nhanh folder log.</span><span class="en-only">A search box filters by table
+                name/path, a status "?" button explains the Status badge meanings, and a button opens the log folder
+                directly.</span></li>
+            <li><span class="vi-only">Bấm <strong>Apply</strong> ở footer để ghi các thay đổi (sửa Sheet/Range/Preset/Scale
+                inline) vào bảng đang hiển thị trong Revit.</span><span class="en-only">Click <strong>Apply</strong> in
+                the footer to write the changes (inline Sheet/Range/Preset/Scale edits) to the table shown in
+                Revit.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Chèn bảng Excel vào view</span><span class="en-only">Embed an Excel table in a
+              view</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Mở Drafting View / Legend / Sheet đích.</span><span class="en-only">Open the
+                target Drafting View / Legend / Sheet.</span></li>
+            <li><span class="vi-only">Click <strong>Excel Link</strong> → tab <em>Links</em> → mở dropdown <strong>Add
+                  Tables</strong> → chọn <strong>Add from Excel</strong>.</span><span class="en-only">Click
+                <strong>Excel Link</strong> → <em>Links</em> tab → open the <strong>Add Tables</strong> dropdown →
+                pick <strong>Add from Excel</strong>.</span></li>
+            <li><span class="vi-only">Pick file <code>.xlsx/.xls</code> → chọn sheet → chọn range (vd
+                <code>A1:F30</code>).</span><span class="en-only">Pick an <code>.xlsx/.xls</code> file → choose sheet →
+                choose range (e.g. <code>A1:F30</code>).</span></li>
+            <li><span class="vi-only">Chọn Table Style preset → click điểm chèn trong view.</span><span
+                class="en-only">Pick a Table Style preset → click an insertion point in the view.</span></li>
+            <li><span class="vi-only">Bảng được render bằng FilledRegion + TextNote, giữ nguyên font, màu, border và
+                merge cell.</span><span class="en-only">The table is rendered with FilledRegion + TextNote, preserving
+                font, colour, borders, and merged cells.</span></li>
+          </ol>
+
+          <h4>Auto-sync</h4>
+          <p>
+            <span class="vi-only">Với các bảng đã bật cột <strong>Auto</strong>, Excel Link tự theo dõi file
+              <code>.xlsx</code>. File Excel thay đổi → bảng trong Revit cập
+              nhật ngay khi bạn mở lại document, hoặc chủ động chạy <strong>Batch Reload/Reload All</strong> để cập
+              nhật ngay lập tức.</span>
+            <span class="en-only">For tables with the <strong>Auto</strong> column enabled, Excel Link watches the
+              <code>.xlsx</code> file. When the Excel changes, the Revit
+              table refreshes as soon as you reopen the document, or run <strong>Batch Reload/Reload All</strong> to
+              update it immediately.</span>
+          </p>
+
+          <h4>Paste Clipboard</h4>
+          <p>
+            <span class="vi-only">Copy bảng từ Excel / Google Sheets / LibreOffice → trong Revit, mở dropdown
+              <strong>Add Tables</strong> → chọn <strong>Add from Clipboard</strong> → click điểm chèn. Tool đọc
+              HTML/TSV clipboard, giữ format.</span>
+            <span class="en-only">Copy a table from Excel / Google Sheets / LibreOffice → in Revit, open the
+              <strong>Add Tables</strong> dropdown → pick <strong>Add from Clipboard</strong> → pick an insertion
+              point. The tool reads HTML/TSV clipboard data, preserving format.</span>
+          </p>
+
+          <h4><span class="vi-only">Tab Table Styles</span><span class="en-only">Table Styles tab</span></h4>
+          <p>
+            <span class="vi-only">Toolbar 6 nút: <strong>New</strong>, <strong>Duplicate</strong>,
+              <strong>Save</strong>, <strong>Delete</strong>, <strong>Import</strong> /
+              <strong>Export</strong>.</span>
+            <span class="en-only">A 6-button toolbar: <strong>New</strong> (create a preset), <strong>Duplicate</strong>
+              (clone the selected preset), <strong>Save</strong>, <strong>Delete</strong>, <strong>Import</strong> /
+              <strong>Export</strong> (share presets as a file between machines/projects).</span>
+          </p>
+        </article>
+
+        <article id="export-schedule-cmd" data-img="screenshots/Export Schedule.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#10B981">ES</div>
+            <div class="module-title">Export Schedule <span class="en">/ Export Schedule</span><span
+                class="panel">Excel</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Tool này dùng để <strong>export/import schedule parameter qua
+                Excel</strong>.</span>
+            <span class="en-only">The tool is used to
+              <strong>export/import schedule parameters via Excel</strong>.</span>
+          </p>
+
+          <h4><span class="vi-only">Chức năng chính</span><span class="en-only">Key functions</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Refresh</strong> — quét lại toàn bộ schedule hợp lệ trong project hiện
+                tại.</span><span
+                class="en-only"><strong>Refresh</strong> — rescans all valid schedules in the current project.</span></li>
+            <li><span class="vi-only"><strong>Select Revit selection</strong> — đồng bộ schedule đang chọn từ Revit vào
+                tool.</span><span class="en-only"><strong>Select Revit selection</strong> — syncs the currently
+                selected schedule from Revit into the tool.</span></li>
+            <li><span class="vi-only"><strong>Search</strong> — ô tìm kiếm lọc nhanh danh sách schedule bên trái theo
+                tên.</span><span class="en-only"><strong>Search</strong> — a search box quickly filters the left
+                schedule list by name.</span></li>
+            <li><span class="vi-only"><strong>Panel Preview bên phải:</strong> chọn 1 schedule → xem 2 tab —
+                <em>Preview</em> và <em>Parameters</em> (có ComboBox <em>Group by</em> để nhóm theo 1 parameter bất
+                kỳ).</span><span
+                class="en-only"><strong>Right-side Preview panel:</strong> select a schedule → view 2 tabs —
+                <em>Preview</em> and <em>Parameters</em> (with a <em>Group by</em> ComboBox to group by any
+                parameter).</span></li>
+            <li><span class="vi-only"><strong>Column filter</strong> — mỗi cột parameter có
+                popup lọc riêng (search + chọn tất cả/chọn theo đã lọc/chỉ hiện đã chọn).</span><span
+                class="en-only"><strong>Column filter</strong> — each parameter column has
+                its own filter popup (search + select all/select filtered/show only selected).</span></li>
+            <li><span class="vi-only"><strong>Export</strong> — xuất dữ liệu parameter của schedule ra file Excel
+                (ClosedXML) kèm dialog xác nhận mở file/folder sau khi xuất xong.</span><span
+                class="en-only"><strong>Export</strong> — exports the schedule's parameter data to an Excel file
+                (ClosedXML), with a confirmation dialog to open the file/folder after export.</span></li>
+            <li><span class="vi-only"><strong>Import</strong> — đọc file Excel để cập nhật ngược parameter vào
+                Revit.</span><span class="en-only"><strong>Import</strong> —
+                reads an Excel file and pushes parameter updates back into Revit.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Bấm <strong>Export Schedule</strong> trong panel Excel để mở cửa sổ
+                riêng.</span><span class="en-only">Click <strong>Export Schedule</strong> in the Excel panel to open
+                the standalone window.</span></li>
+            <li><span class="vi-only">Chọn 1 schedule từ danh sách bên trái.</span><span class="en-only">Choose a
+                schedule from the left list.</span></li>
+            <li><span class="vi-only">Xem tab <em>Parameters</em> bên phải, dùng <em>Group by</em> và cascading filter
+                để kiểm tra dữ liệu, chú ý cột nào tô đỏ (read-only) sẽ không import được.</span><span
+                class="en-only">Check the <em>Parameters</em> tab on the right, use <em>Group by</em> and the cascading
+                filter to review the data — note which columns are red (read-only) since those won't be
+                importable.</span></li>
+            <li><span class="vi-only">Bấm <strong>Export</strong> để xuất file Excel, sửa dữ liệu trong Excel, sau đó
+                quay lại bấm <strong>Import</strong> để ghi ngược vào Revit — xử lý conflict nếu tool báo có xung đột
+                Type Parameter.</span><span class="en-only">Click <strong>Export</strong> to generate the Excel file,
+                edit the data in Excel, then come back and click <strong>Import</strong> to write it back into Revit —
+                resolve conflicts if the tool reports a Type Parameter clash.</span></li>
+          </ol>
+        </article>
+      </section>
+
+      <!-- ============ PANEL PILE STRUCTURE ============ -->
+      <section id="panel-pile">
+        <h2>9. Panel · Pile Structure</h2>
+        <p>
+          <span class="vi-only">3 tool chuyên xử lý <strong>cọc móng (Structural Foundation)</strong> hàng loạt.</span>
+          <span class="en-only">3 tools dedicated to bulk-processing <strong>foundation piles (Structural
+              Foundation)</strong>.</span>
+        </p>
+
+        <!-- PILE COORDINATES -->
+        <article id="pile-coord" data-img="screenshots/Pile Coordinates.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#DB2777">C</div>
+            <div class="module-title">Pile Coordinates <span class="en">/ Pile Coordinates</span><span
+                class="panel">Pile Structure</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Gán toạ độ của cọc vào parameter của chính cọc, theo <em>Project Base
+                Point</em> + <em>Survey Point / Angle to True North</em>.</span>
+            <span class="en-only">Assign coordinates of each pile into its own parameters, based on the
+              <em>Project Base Point</em> + <em>Survey Point / Angle to True North</em>.</span>
+          </p>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Click <strong>Pile Coordinates</strong> → tool tự load toàn bộ cọc + hiển thị
+                Project Base Point/Survey Point ở trên.</span><span class="en-only">Click <strong>Pile
+                  Coordinates</strong> → the tool auto-loads every pile + shows the Project Base Point/Survey Point
+                info above.</span></li>
+            <li><span class="vi-only">(Tuỳ chọn) Bấm <strong>Select piles</strong> nếu chỉ muốn xử lý 1 tập cọc pick
+                tay.</span><span class="en-only">(Optional) Click <strong>Select piles</strong> if you only want to
+                process a hand-picked subset.</span></li>
+            <li><span class="vi-only">Chọn parameter đích cho North/South, East/West (và Z nếu tick <em>Apply
+                  Z</em>) ở panel Param Mapping.</span><span class="en-only">Pick the destination parameters for
+                North/South, East/West (and Z if <em>Apply Z</em> is ticked) in the Param Mapping panel.</span></li>
+            <li><span class="vi-only">Chỉnh <em>Unit</em> nếu cần.</span><span class="en-only">Adjust
+                <em>Unit</em> if needed.</span></li>
+            <li><span class="vi-only">Bấm <strong>Apply</strong> để ghi parameter. <strong>Refresh</strong> tải lại dữ
+                liệu, <strong>Cancel</strong> đóng cửa sổ không ghi gì.</span><span class="en-only">Click
+                <strong>Apply</strong> to write the parameters. <strong>Refresh</strong> reloads the data,
+                <strong>Cancel</strong> closes the window without writing anything.</span></li>
+          </ol>
+          <div class="card amber">
+            <span class="vi-only"><strong>Lưu ý:</strong> Tool xoay toạ độ theo <em>-angle</em> + translate
+              <em>-origin</em>, nên kết quả là toạ độ thực địa (True North).</span>
+            <span class="en-only"><strong>Note:</strong> the tool rotates by <em>-angle</em> + translates by
+              <em>-origin</em>, so the result is real-world (True North) coordinates.</span>
+          </div>
+        </article>
+
+        <!-- PILE DIM -->
+        <article id="pile-dim" data-img="screenshots/Pile Dim.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#F59E0B">D</div>
+            <div class="module-title">Pile Dim <span class="en">/ Pile Dim</span><span class="panel">Pile
+                Structure</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Tự động tạo Dimension từ <strong>tâm cọc</strong> đến <strong>Grid gần nhất</strong> ở
+              4 phía: Trên / Dưới / Trái / Phải.</span>
+            <span class="en-only">Auto-creates Dimensions from each <strong>pile center</strong> to the <strong>nearest
+                Grid</strong> on 4 sides: Top / Bottom / Left / Right.</span>
+          </p>
+
+          <h4><span class="vi-only">Cài đặt</span><span class="en-only">Settings</span></h4>
+          <ul>
+            <li><span class="vi-only">Nút <strong>Select piles</strong> ở đầu cửa sổ để pick tay tập cọc cần
+                dim.</span><span
+                class="en-only">A <strong>Select piles</strong> button at the top to hand-pick the piles to
+                dimension.</span></li>
+            <li><strong>Dim Type</strong> — <span class="vi-only">dropdown chọn DimensionType.</span><span
+                class="en-only">a dropdown to pick the DimensionType.</span></li>
+            <li><span class="vi-only"><strong>Distance to Dim</strong> — ô nhập khoảng cách offset (mm, mặc định
+                800).</span><span class="en-only"><strong>Distance to Dim</strong> — offset distance input (mm, default
+                800).</span></li>
+            <li><span class="vi-only"><strong>Mode dim</strong> — dropdown 2 lựa chọn <em>Single (Đơn)</em> /
+                <em>Auto (Tự động)</em>, mặc định Auto.</span><span class="en-only"><strong>Mode dim</strong> — a
+                2-option dropdown <em>Single</em> / <em>Auto</em>, defaulting to Auto.</span></li>
+            <li><span class="vi-only"><strong>Cluster tolerance</strong> — ô nhập dung sai gom cụm cọc, kèm nút "?" mở
+                dialog giải thích cách dùng.</span><span class="en-only"><strong>Cluster tolerance</strong> — an input
+                for the pile-clustering tolerance, with a "?" button opening an explanation dialog.</span></li>
+            <li><span class="vi-only">Checkbox <strong>Bao 2 grid biên</strong> — chỉ dùng được ở Mode Auto, quyết định
+                có tính luôn 2 grid ngoài cùng làm mốc dim hay không.</span><span class="en-only">The <strong>Include 2
+                  boundary grids</strong> checkbox — only usable in Auto mode, controls whether the two outermost
+                grids are also used as dimension references.</span></li>
+            <li><strong>View Template</strong> — <span class="vi-only">dropdown tự chọn sẵn template của view đang
+                active (có thể đổi), áp dụng cho view sau khi tạo dim xong.</span><span class="en-only">a dropdown
+                pre-selects the active view's template (can be changed), applied to the view after dims are
+                created.</span></li>
+            <li><span class="vi-only"><strong>Vị trí:</strong> 4 CheckBox xếp hình chữ thập quanh icon cọc — Trên /
+                Dưới / Trái / Phải.</span><span class="en-only"><strong>Position:</strong> 4 checkboxes arranged in a
+                cross around a pile icon — Top / Bottom / Left / Right.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Chuyển sang 1 Plan View → click <strong>Pile Dim</strong> → cấu hình Dim Type,
+                Distance to Dim, Mode, Cluster tolerance, View Template.</span><span class="en-only">Switch to a Plan
+                View → click <strong>Pile Dim</strong> → configure Dim Type, Distance to Dim, Mode, Cluster tolerance,
+                View Template.</span></li>
+            <li><span class="vi-only">Tick các phía cần dim (Trên/Dưới/Trái/Phải).</span><span class="en-only">Tick the
+                sides to dimension (Top/Bottom/Left/Right).</span></li>
+            <li><span class="vi-only">Bấm <strong>Select piles</strong> → pick cọc cần dim trong Revit → tool tạo dim
+                ngay sau khi pick xong.</span><span class="en-only">Click <strong>Select piles</strong> → pick the
+                piles to dimension in Revit → the tool creates the dims right after picking.</span></li>
+          </ol>
+
+          <h4>Edge case</h4>
+          <ul>
+            <li><span class="vi-only">Cọc biên không có grid 1 phía → tự skip phía đó, vẫn tạo dim phía
+                khác.</span><span class="en-only">Edge piles missing a grid on one side → that side is auto-skipped;
+                other sides still get a dim.</span></li>
+            <li><span class="vi-only">Block khi active view <em>không phải Plan View</em>.</span><span
+                class="en-only">Blocked when the active view is <em>not a Plan View</em>.</span></li>
+            <li><span class="vi-only">Validate: Distance to Dim > 0, tick ít nhất 1 phía.</span><span
+                class="en-only">Validates: Distance to Dim > 0, at least one side ticked.</span></li>
+          </ul>
+        </article>
+
+        <!-- PILE NAME -->
+        <article id="pile-name" data-img="screenshots/Pile Name.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#06B6D4">N</div>
+            <div class="module-title">Pile Name <span class="en">/ Pile Name</span><span class="panel">Pile
+                Structure</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Đặt tên cọc theo cụm <strong>đài móng (PileCap)</strong>. Counter tăng dần xuyên suốt
+              qua tất cả PileCap, sort theo bố cục địa hình (trái→phải, trên→dưới).</span>
+            <span class="en-only">Names piles by <strong>pile cap (PileCap)</strong> cluster. Counter increments
+              continuously across all PileCaps, sorted by topographic layout (left→right, top→bottom).</span>
+          </p>
+
+          <h4><span class="vi-only">Scope + Filter</span><span class="en-only">Scope + Filter</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Scope</strong> — dropdown 3 lựa chọn: <em>Toàn model / Active view /
+                  Selection hiện tại</em>, kèm nút <strong>Refresh</strong>.</span><span class="en-only"><strong>Scope</strong>
+                — a 3-option dropdown: <em>Whole model / Active view / Current selection</em>, with a
+                <strong>Refresh</strong> button.</span></li>
+            <li><span class="vi-only"><strong>Expander "Lọc loại cọc" (Filter pile types)</strong> và <strong>Expander
+                  "Lọc loại đài" (Filter pilecap types)</strong> — mỗi expander có checkbox chọn-tất-cả tri-state,
+                checkbox "Ẩn dòng chưa tick", search box và ListBox liệt kê từng loại kèm checkbox.</span><span
+                class="en-only"><strong>"Filter pile types" Expander</strong> and <strong>"Filter pilecap types"
+                  Expander</strong> — each has a tri-state select-all checkbox, a "hide unticked" checkbox, a search
+                box, and a ListBox of types with individual checkboxes.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Define Value</span><span class="en-only">Define Value</span></h4>
+          <p>
+            <span class="vi-only">Dropdown chọn <strong>parameter đích</strong> + 4 ô
+              <strong>Prefix / Start / Step / Suffix</strong>.</span>
+            <span class="en-only">A dropdown picks the <strong>destination parameter</strong> + 4 boxes
+              <strong>Prefix / Start / Step / Suffix</strong>.</span>
+          </p>
+
+          <h4><span class="vi-only">Sắp xếp (AutoSort)</span><span class="en-only">AutoSort</span></h4>
+          <p>
+            <span class="vi-only">Danh sách quy tắc sort có thể thêm/bớt: mỗi dòng chọn trục <em>Axis X/Y/Z</em> +
+              chiều <em>Tăng/Giảm dần</em>. Nhiều dòng tạo thành chuỗi sort đa cấp (vd sort X trước, trong mỗi nhóm X
+              bằng nhau thì sort tiếp theo Y).</span>
+            <span class="en-only">A repeatable sort-rule list: each row picks an <em>Axis X/Y/Z</em> + an
+              <em>Ascending/Descending</em> direction. Multiple rows form a multi-level sort chain (e.g. sort by X
+              first, then by Y within equal-X groups).</span>
+          </p>
+
+          <h4><span class="vi-only">Chạy đánh tên (Run)</span><span class="en-only">Run</span></h4>
+          <p>
+            <span class="vi-only">2 nút lớn: <strong>All PileCaps</strong> (chạy toàn bộ đài đã lọc, xuyên suốt project)
+              và <strong>Pick PileCaps…</strong> (chỉ pick tay 1 vài đài cần đặt tên). Icon bánh răng ⚙ cạnh nút
+              <em>All PileCaps</em> mở dialog cài đặt cách sắp xếp thứ tự đài (<strong>C1</strong> — theo chuỗi quy tắc
+              Axis/Asc-Desc riêng cho đài, hoặc <strong>C2</strong> — theo 1 parameter của đài, kèm checkbox
+              <em>"Có đặt tên cọc ở các đài không gán giá trị không?"</em>).</span>
+            <span class="en-only">2 large buttons: <strong>All PileCaps</strong> (runs every filtered cap across the
+              project) and <strong>Pick PileCaps…</strong> (hand-pick just a few caps to name). The ⚙ gear icon next to
+              <em>All PileCaps</em> opens a dialog for the cap-ordering method (<strong>C1</strong> — its own
+              Axis/Asc-Desc rule chain for caps, or <strong>C2</strong> — order by a cap parameter, with a checkbox
+              <em>"Name piles in caps without a parameter value?"</em>).</span>
+          </p>
+
+          <h4><span class="vi-only">Preview + ghi kết quả</span><span class="en-only">Preview + writing results</span>
+          </h4>
+          <p>
+            <span class="vi-only">Bảng Preview (mở/đóng qua nút gập cạnh bên) nhóm theo từng đài "📦 Đài móng: {tên} ·
+              N cọc", cột <em>Seq / Id / Family / Type / Old / New / Status</em>. Bấm <strong>Apply</strong> để ghi
+              parameter, <strong>Reset</strong> xoá preview hiện tại, <strong>Close</strong> đóng cửa sổ.</span>
+            <span class="en-only">The Preview table (expand/collapse via a side toggle) groups rows by cap "📦 Pile
+              cap: {name} · N piles", columns <em>Seq / Id / Family / Type / Old / New / Status</em>. Click
+              <strong>Apply</strong> to write the parameter, <strong>Reset</strong> clears the current preview,
+              <strong>Close</strong> closes the window.</span>
+          </p>
+
+          <h4><span class="vi-only">Naming format</span><span class="en-only">Naming format</span></h4>
+          <p><code>{Prefix}{Counter:D{Digits}}{Suffix}</code> — <span class="vi-only">vd Prefix=<code>P</code>,
+              Start=<code>1</code>, Step=<code>1</code> (leading zero 3 chữ số) → <code>P001</code>,
+              <code>P002</code>...</span><span class="en-only">e.g. Prefix=<code>P</code>, Start=<code>1</code>,
+              Step=<code>1</code> (3-digit leading zero) → <code>P001</code>, <code>P002</code>...</span></p>
+          <div class="card blue">
+            <span class="vi-only"><strong>Edge case xử lý sẵn:</strong> đài chữ U (concave) + lỗ thang máy + đài cùng
+              tên T1 ở 2 đầu công trình — tool dùng <em>Floor.Sketch</em> ray casting và bbox <em>OriginalGeometry</em>
+              để xác định đúng cọc thuộc đài nào.</span>
+            <span class="en-only"><strong>Edge cases handled:</strong> concave (U-shaped) caps + elevator pit holes +
+              caps named T1 at both ends of the building — the tool uses <em>Floor.Sketch</em> ray casting and
+              <em>OriginalGeometry</em> bbox to correctly determine which pile belongs to which cap.</span>
+          </div>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Chọn <strong>Scope</strong> phù hợp, lọc loại cọc / loại đài nếu cần.</span><span class="en-only">Choose the <strong>Scope</strong>, then filter pile types and cap types if needed.</span></li>
+            <li><span class="vi-only">Cấu hình <strong>Define Value</strong>: chọn parameter đích và đặt Prefix/Start/Step/Suffix.</span><span class="en-only">Configure <strong>Define Value</strong>: pick the destination parameter and set Prefix/Start/Step/Suffix.</span></li>
+            <li><span class="vi-only">(Tuỳ chọn) Điều chỉnh <strong>AutoSort</strong> để sắp thứ tự đánh số theo ý muốn.</span><span class="en-only">(Optional) Adjust <strong>AutoSort</strong> rules to control the numbering order.</span></li>
+            <li><span class="vi-only">Bấm <strong>All PileCaps</strong> để đặt tên toàn bộ, hoặc <strong>Pick PileCaps…</strong> để chỉ xử lý những đài chọn tay.</span><span class="en-only">Click <strong>All PileCaps</strong> to name all caps, or <strong>Pick PileCaps…</strong> to hand-pick specific caps.</span></li>
+            <li><span class="vi-only">Kiểm tra bảng <strong>Preview</strong> → bấm <strong>Apply</strong> để ghi kết quả.</span><span class="en-only">Review the <strong>Preview</strong> table → click <strong>Apply</strong> to write the results.</span></li>
+          </ol>
+        </article>
+      </section>
+
+      <!-- ============ PANEL DIMENSIONS ============ -->
+      <section id="panel-dimensions">
+        <h2>10. Panel · Dimensions</h2>
+
+        <article id="dim-column" data-img="screenshots/Dim Column.png" class="module-card wip">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#F59E0B">DC</div>
+            <div class="module-title">Dim Column <span class="en">/ Dim Column</span><span
+                class="panel">Dimensions</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Tự động tạo Dimension từ <strong>Structural Column</strong> đến grid gần nhất theo 4
+              phía Top / Bottom / Left / Right. Có 2 mode reference: <strong>Edge</strong> (đến mặt cột) và
+              <strong>Center</strong> (đến tim cột).</span>
+            <span class="en-only">Automatically creates Dimensions from <strong>Structural Columns</strong> to the
+              nearest grid on the 4 sides Top / Bottom / Left / Right. Two reference modes are available:
+              <strong>Edge</strong> (to the column face) and <strong>Center</strong> (to the column center).</span>
+          </p>
+
+          <h4><span class="vi-only">Cài đặt</span><span class="en-only">Settings</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Dim Type</strong> — dropdown chọn DimensionType.</span><span
+                class="en-only"><strong>Dim Type</strong> — a dropdown to pick the DimensionType.</span></li>
+            <li><span class="vi-only"><strong>Reference Mode</strong> — dropdown 2 lựa chọn <em>Edge</em> /
+                <em>Center</em>.</span><span class="en-only"><strong>Reference Mode</strong> — a 2-option dropdown
+                <em>Edge</em> / <em>Center</em>.</span></li>
+            <li><span class="vi-only"><strong>Offset</strong> — ô nhập khoảng cách (mm) từ cột đến đường dim.</span><span
+                class="en-only"><strong>Offset</strong> — a distance (mm) input from the column to the dim
+                line.</span></li>
+            <li><span class="vi-only"><strong>Mode</strong> — dropdown 2 lựa chọn <em>Single</em> / <em>Auto</em>.</span><span
+                class="en-only"><strong>Mode</strong> — a 2-option dropdown <em>Single</em> / <em>Auto</em>.</span></li>
+            <li><span class="vi-only"><strong>Cluster tolerance</strong> — ô nhập dung sai gom cụm cột, kèm nút "?" mở
+                dialog giải thích.</span><span class="en-only"><strong>Cluster tolerance</strong> — an input for the
+                column-clustering tolerance, with a "?" button opening an explanation dialog.</span></li>
+            <li><span class="vi-only">Checkbox <strong>Include boundary grids</strong> — tính luôn 2 grid ngoài cùng
+                làm mốc dim.</span><span class="en-only">The <strong>Include boundary grids</strong> checkbox — also
+                use the two outermost grids as dimension references.</span></li>
+            <li><span class="vi-only"><strong>Auto Leader</strong> — checkbox Enable bật/tắt tự kéo leader cho đoạn
+                text dim quá ngắn, kèm 3 ô số: <em>Min segment threshold (mm)</em>, <em>Leader factor (×)</em>,
+                <em>Stagger step (×)</em>.</span><span class="en-only"><strong>Auto Leader</strong> — an Enable
+                checkbox toggles automatically pulling a leader out for dimension segments that are too short to fit
+                text, plus 3 numeric fields: <em>Min segment threshold (mm)</em>, <em>Leader factor (×)</em>,
+                <em>Stagger step (×)</em>.</span></li>
+            <li><strong>View Template</strong> — <span class="vi-only">dropdown chọn template áp dụng cho view sau khi
+                tạo dim.</span><span class="en-only">a dropdown picks the template applied to the view after dims are
+                created.</span></li>
+            <li><span class="vi-only"><strong>Vị trí:</strong> 4 checkbox Top/Bottom/Left/Right quanh icon
+                cột.</span><span class="en-only"><strong>Position:</strong> 4 Top/Bottom/Left/Right checkboxes around a
+                column icon.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Cấu hình Dim Type, Reference Mode, Offset, Mode, các phía cần dim.</span><span
+                class="en-only">Configure Dim Type, Reference Mode, Offset, Mode, and the sides to dimension.</span>
+            </li>
+            <li><span class="vi-only">Bấm nút <strong>Pick columns</strong> → pick cột trong Revit → dim được tạo ngay
+                sau khi pick xong (không có bảng Preview hay nút Apply riêng — nút Pick vừa chọn vừa
+                ghi).</span><span class="en-only">Click the <strong>Pick columns</strong> button → pick columns in
+                Revit → the dims are created right after picking (there is no separate Preview table or Apply button —
+                the Pick button both selects and writes).</span></li>
+          </ol>
+        </article>
+
+        <article id="dim-wall" data-img="screenshots/Dim Wall.png" class="module-card wip">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#F59E0B">DW</div>
+            <div class="module-title">Dim Wall <span class="en">/ Dim Wall</span><span class="panel">Dimensions</span>
+            </div>
+          </div>
+          <p>
+            <span class="vi-only">Tạo chain dimension qua các mặt biên <strong>Wall</strong> và jamb của Door/Window đến
+              grid gần nhất. Hỗ trợ cluster wall dính liền và dim xuyên qua opening nếu phù hợp bố cục.</span>
+            <span class="en-only">Creates chain dimensions through <strong>Wall</strong> boundary faces and Door/Window
+              jambs to the nearest grid. Supports connected wall clusters and dimensioning through openings when
+              appropriate.</span>
+          </p>
+
+          <h4><span class="vi-only">Cài đặt</span><span class="en-only">Settings</span></h4>
+          <p>
+            <span class="vi-only">Giống Dim Column (Dim Type / Offset / Mode Single-Auto / Cluster tolerance + "?" /
+              Include boundary grids / Auto Leader 4 tham số / View Template / 4 checkbox vị trí), <strong>ngoại
+                trừ</strong>: không có Reference Mode (Dim Wall chỉ dim theo mặt biên wall, không có mode
+              Center). Thêm riêng checkbox <strong>Include Inserts</strong> (mặc định bật) — dim xuyên qua jamb của
+              Door/Window (và cả các lỗ mở dạng Opening thuần) chèn trên tường.</span>
+            <span class="en-only">Same as Dim Column (Dim Type / Offset / Single-Auto Mode / Cluster tolerance + "?" /
+              Include boundary grids / 4 Auto Leader parameters / View Template / 4 position checkboxes),
+              <strong>except</strong>: there is no Reference Mode (Dim Wall only dimensions to the wall face, no Center
+              mode). It adds its own <strong>Include Inserts</strong> checkbox (default on) — dimensions through
+              Door/Window jambs (and plain Opening-class cuts too) hosted in the wall.</span>
+          </p>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Cấu hình Dim Type, Offset, Mode, Include Inserts, các phía cần dim.</span><span
+                class="en-only">Configure Dim Type, Offset, Mode, Include Inserts, and the sides to dimension.</span>
+            </li>
+            <li><span class="vi-only">Bấm nút <strong>Pick walls</strong> → pick wall trong Revit → dim được tạo ngay
+                sau khi pick xong (cũng là pick-and-apply, không có Preview/Apply riêng).</span><span
+                class="en-only">Click the <strong>Pick walls</strong> button → pick walls in Revit → the dims are
+                created right after picking (also pick-and-apply, no separate Preview/Apply).</span></li>
+          </ol>
+        </article>
+
+        <article id="dim-edit" data-img="screenshots/Dim Edit.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#F59E0B">DE</div>
+            <div class="module-title">Dim Edit <span class="en">/ Dim Edit</span><span class="panel">Dimensions</span>
+            </div>
+          </div>
+          <p>
+            <span class="vi-only">Liệt kê toàn bộ Dimension đang bị override text/value và cho phép reset về mặc định.</span>
+            <span class="en-only">Lists all Dimensions with active text/value overrides and lets you reset them back to default.</span>
+          </p>
+
+          <p>
+            <span class="vi-only">Mỗi dòng là 1 Dimension đang có override, checkbox đầu dòng để chọn dòng xử lý hàng
+              loạt. Cột <em>ElementId, View, View Type, Sheet Number, Sheet, Dim Type, Use Actual Value, Check,
+                Value</em> chỉ đọc; cột <strong>editable</strong> (sửa trực tiếp trên grid) gồm <em>Replace With Text,
+                Above, Prefix, Suffix, Below</em>.</span>
+            <span class="en-only">Each row is a Dimension with an active override; a leading checkbox selects rows for
+              bulk actions. Columns <em>ElementId, View, View Type, Sheet Number, Sheet, Dim Type, Use Actual Value,
+                Check, Value</em> are read-only; the <strong>editable</strong> columns (edit directly on the grid) are
+              <em>Replace With Text, Above, Prefix, Suffix, Below</em>.</span>
+          </p>
+          <ul>
+            <li><span class="vi-only"><strong>Column filter:</strong> mỗi cột có nút ▾ mở popup lọc riêng
+                (search + chọn tất cả/chọn theo đã lọc/chỉ hiện đã chọn) — các phễu tự cập nhật theo nhau.</span><span
+                class="en-only"><strong>Column filter:</strong> each column has a ▾ button opening its own
+                filter popup (search + select all/select filtered/show only selected) — the filters update relative
+                to each other.</span></li>
+            <li><span class="vi-only"><strong>Clear Filter</strong> — xoá hết bộ lọc cột đang áp dụng.</span><span
+                class="en-only"><strong>Clear Filter</strong> — clears every active column filter.</span></li>
+            <li><span class="vi-only"><strong>Reset</strong> — reset hàng loạt các dòng đang tick checkbox về giá trị
+                mặc định (không phải nút reset từng dòng riêng lẻ).</span><span class="en-only"><strong>Reset</strong>
+                — bulk-resets every checked row back to its default value (not a per-row reset button).</span></li>
+            <li><span class="vi-only"><strong>Refresh</strong> — quét lại toàn project để cập nhật danh sách (gộp luôn
+                chức năng scan/reload).</span><span class="en-only"><strong>Refresh</strong> — rescans the whole
+                project to update the list (also serves as the scan/reload action).</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Click <strong>Dim Edit</strong> → tool tự quét toàn project, liệt kê mọi Dimension
+                đang bị override.</span><span class="en-only">Click <strong>Dim Edit</strong> → the tool scans the
+                whole project, listing every overridden Dimension.</span></li>
+            <li><span class="vi-only">Dùng cascading filter để thu hẹp theo View/Sheet/Dim Type đang nghi
+                vấn.</span><span class="en-only">Use the cascading filter to narrow down by the View/Sheet/Dim Type in
+                question.</span></li>
+            <li><span class="vi-only">Tick các dòng cần reset → bấm <strong>Reset</strong>; hoặc sửa trực tiếp các cột
+                editable (Prefix/Suffix/Above/Below/Replace With Text) rồi Enter để commit.</span><span
+                class="en-only">Tick the rows to reset → click <strong>Reset</strong>; or edit the editable columns
+                directly (Prefix/Suffix/Above/Below/Replace With Text) and press Enter to commit.</span></li>
+          </ol>
+        </article>
+      </section>
+
+      <!-- ============ PANEL SHEETS ============ -->
+      <section id="panel-sheets">
+        <h2>11. Panel · Sheets</h2>
+
+        <article id="sheet-set" data-img="screenshots/Sheet Set.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#06B6D4">SS</div>
+            <div class="module-title">Sheet Set <span class="en">/ Sheet Set</span><span class="panel">Sheets</span>
+            </div>
+          </div>
+          <p>
+            <span class="vi-only">Tạo <strong>ViewSheetSet</strong> (bộ in) từ 3 nguồn: Schedule (Sheet List), Revision,
+              hoặc Parameter.</span>
+            <span class="en-only">Creates a <strong>ViewSheetSet</strong> (print set) from 3 sources: Schedule (Sheet
+              List), Revision, or Parameter.</span>
+          </p>
+
+          <h4><span class="vi-only">Cấu trúc 4 tab</span><span class="en-only">4-tab structure</span></h4>
+          <table>
+            <thead>
+              <tr>
+                <th>Tab</th>
+                <th><span class="vi-only">Nội dung</span><span class="en-only">Content</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="vi-only">Sheet Sets (hiện có)</span><span class="en-only">Sheet Sets (existing)</span></td>
+                <td><span class="vi-only">Layout 2 cột: <strong>trái</strong> là danh sách ViewSheetSet đã có trong
+                    project; <strong>phải</strong> là 2 sub-tab <em>Sheet</em> / <em>View</em> hiển thị nội dung
+                    của set đang chọn.</span><span
+                    class="en-only">A 2-column layout: <strong>left</strong> lists existing ViewSheetSets in the
+                    project; <strong>right</strong> has 2 sub-tabs <em>Sheet</em> / <em>View</em> showing the
+                    selected set's content.</span></td>
+              </tr>
+              <tr>
+                <td>Schedule</td>
+                <td><span class="vi-only">Dropdown chọn 1 Sheet List Schedule có sẵn trong project làm nguồn tạo
+                    set.</span><span class="en-only">A dropdown picks an existing Sheet List Schedule in the project as
+                    the source for the set.</span></td>
+              </tr>
+              <tr>
+                <td>Revision</td>
+                <td><span class="vi-only">Danh sách checkbox multi-select các Revision trong project — sheet có mang
+                    Revision đã tick sẽ được đưa vào set.</span><span class="en-only">A multi-select checkbox list of
+                    Revisions in the project — sheets carrying a ticked Revision are added to the set.</span></td>
+              </tr>
+              <tr>
+                <td>Parameter</td>
+                <td><span class="vi-only">2 dropdown: chọn Parameter rồi chọn 1 giá trị — sheet có giá trị khớp sẽ
+                    được đưa vào set.</span><span
+                    class="en-only">2 dropdowns: pick a Parameter, then pick a value — sheets matching that value are
+                    added to the set.</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article id="set-sheet-number" data-img="screenshots/Set Sheet Number.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#0EA5E9">SN</div>
+            <div class="module-title">Set Sheet Number <span class="en">/ Set Sheet Number</span><span
+                class="panel">Sheets</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Đánh lại <strong>Sheet Number</strong> hàng loạt.</span>
+            <span class="en-only">Batch-renumbers <strong>Sheet Numbers</strong>.</span>
+          </p>
+
+          <h4><span class="vi-only">Bố cục 3 cột</span><span class="en-only">3-column layout</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Cột trái — Selection:</strong> DataGrid tick chọn sheet.</span><span
+                class="en-only"><strong>Left column — Selection:</strong> a DataGrid to tick sheets.</span></li>
+            <li><span class="vi-only"><strong>Cột giữa — mũi tên:</strong> <em>▲▲ / ▲ / ▼ / ▼▼</em> để sắp xếp thứ tự
+                sheet đã chọn.</span><span class="en-only"><strong>Middle column — arrows:</strong> <em>▲▲ / ▲ / ▼ /
+                  ▼▼</em> to reorder the selected sheets.</span></li>
+            <li><span class="vi-only"><strong>Cột phải — Renumber:</strong> xem trước cột <em>New</em> (số mới, tô
+                đậm) / <em>Sheet Number</em> (số cũ) / <em>Sheet Name</em>.</span><span class="en-only"><strong>Right
+                  column — Renumber:</strong> preview columns <em>New</em>
+                (bold new number) / <em>Sheet Number</em> (old number) / <em>Sheet Name</em>.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Tick các sheet cần đánh lại số ở cột Selection.</span><span class="en-only">Tick
+                the sheets to renumber in the Selection column.</span></li>
+            <li><span class="vi-only">Dùng mũi tên ở cột giữa để sắp xếp đúng thứ tự mong muốn.</span><span
+                class="en-only">Use the middle-column arrows to arrange the desired order.</span></li>
+            <li><span class="vi-only">Nhập Prefix/Start/Step/Suffix ở toolbar cột Renumber → bấm nút "Fill" (đổi tên
+                theo Rename label) để điền số mới cho các dòng đã chọn.</span><span class="en-only">Enter
+                Prefix/Start/Step/Suffix in the Renumber column's toolbar → click the "Fill" button (labeled as
+                Rename) to fill the new numbers for the selected rows.</span></li>
+            <li><span class="vi-only">Kiểm tra cột <em>New</em> ở bảng preview → bấm <strong>Apply</strong> để ghi số
+                mới vào Revit.</span><span class="en-only">Check the <em>New</em> column in the preview → click
+                <strong>Apply</strong> to write the new numbers into Revit.</span></li>
+          </ol>
+        </article>
+
+        <article id="duplicate-sheet-view" data-img="screenshots/Duplicate Sheet View.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#06B6D4">DS</div>
+            <div class="module-title">Duplicate Sheet / View <span class="en">/ Duplicate Sheet / View</span><span
+                class="panel">Sheets</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Nhân bản Sheet và View trong project hiện tại để tạo bộ hồ sơ tương tự nhanh hơn, giảm
+              thao tác thủ công lặp lại.</span>
+            <span class="en-only">Duplicates Sheets and Views in the current project to speed up repeated documentation
+              setups.</span>
+          </p>
+
+          <h4><span class="vi-only">2 sub-tab: Sheets / Views</span><span class="en-only">2 sub-tabs: Sheets / Views</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Tab Sheets:</strong> Nhân bản Sheet — chọn số bản copy, cách xử lý View/Schedule/Legend bên trong, và đặt suffix cho Sheet mới.</span><span class="en-only"><strong>Tab Sheets:</strong> Duplicate Sheets — choose the copy count, how to handle Views/Schedules/Legends inside, and set a suffix for the new Sheets.</span></li>
+            <li><span class="vi-only"><strong>Tab Views:</strong> Nhân bản View trực tiếp (không qua Sheet) — chọn số bản copy và đặt prefix/suffix tên cho View mới.</span><span class="en-only"><strong>Tab Views:</strong> Duplicate Views directly (not through a Sheet) — choose the copy count and set a prefix/suffix for the new View names.</span></li>
+          </ul>
+        </article>
+
+        <article id="place-view" data-img="screenshots/Place View.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#14B8A6">PV</div>
+            <div class="module-title">Place View <span class="en">/ Place View</span><span class="panel">Sheets</span>
+            </div>
+          </div>
+          <p>
+            <span class="vi-only">Đặt hàng loạt View lên nhiều Sheet, copy vị trí, title và type từ một viewport mẫu.
+              Phù hợp khi layout nhiều sheet lặp cấu trúc giống nhau.</span>
+            <span class="en-only">Places multiple Views onto many Sheets, copying position, title, and type from a
+              template viewport. Ideal for repeated sheet layouts.</span>
+          </p>
+
+          <h4><span class="vi-only">Bố cục 2 cột</span><span class="en-only">2-column layout</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Cột trái — Sheets:</strong> danh sách Sheet cần đặt View; dùng mũi tên để sắp lại thứ tự.</span><span class="en-only"><strong>Left column — Sheets:</strong> list of target Sheets; use the arrows to reorder.</span></li>
+            <li><span class="vi-only"><strong>Cột phải — Views:</strong> danh sách View cần đặt; dùng mũi tên để ghép đúng cặp Sheet[i] ↔ View[i].</span><span class="en-only"><strong>Right column — Views:</strong> list of Views to place; use the arrows to pair Sheet[i] ↔ View[i] correctly.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Tick các sheet cần đặt view ở DataGrid trái, tick các view cần đặt ở DataGrid
+                phải (số dòng tick 2 bên phải bằng nhau).</span><span class="en-only">Tick the target sheets in the
+                left DataGrid, tick the views to place in the right DataGrid (the number of ticked rows on both sides
+                must match).</span></li>
+            <li><span class="vi-only">Dùng mũi tên sắp đúng cặp sheet[i] ↔ view[i] mong muốn.</span><span
+                class="en-only">Use the arrows to arrange the desired sheet[i] ↔ view[i] pairing.</span></li>
+            <li><span class="vi-only">Bấm <strong>Pick template viewport</strong> → click 1 viewport mẫu trong
+                Revit.</span><span class="en-only">Click <strong>Pick template viewport</strong> → click a template
+                viewport in Revit.</span></li>
+            <li><span class="vi-only">Bấm <strong>Apply</strong> — tool tạo viewport cho từng cặp tại đúng vị trí,
+                label offset, label line length và type của viewport mẫu.</span><span class="en-only">Click
+                <strong>Apply</strong> — the tool creates a viewport for each pair at the template viewport's exact
+                position, label offset, label line length, and type.</span></li>
+          </ol>
+        </article>
+
+        <article id="align-view" data-img="screenshots/Align View.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#6366F1">AV</div>
+            <div class="module-title">Align View <span class="en">/ Align View</span><span class="panel">Sheets</span>
+            </div>
+          </div>
+          <p>
+            <span class="vi-only">Dời hàng loạt Viewport / Schedule / Legend về cùng toạ độ của một viewport mẫu; có thể
+              chọn align Position, Title và Type.</span>
+            <span class="en-only">Moves multiple Viewports / Schedules / Legends to the same coordinates as a template
+              viewport; you can align Position, Title, and Type.</span>
+          </p>
+
+          <h4><span class="vi-only">Bố cục</span><span class="en-only">Layout</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Danh sách:</strong> toàn bộ Viewport/Schedule/Legend trong project, nhóm theo Sheet.</span><span class="en-only"><strong>List:</strong> all Viewports/Schedules/Legends in the project, grouped by Sheet.</span></li>
+            <li><span class="vi-only"><strong>Tuỳ chọn align:</strong> Position / Title / Type — tick riêng lẻ hoặc kết hợp.</span><span class="en-only"><strong>Align options:</strong> Position / Title / Type — tick individually or combined.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Tick các viewport/schedule/legend cần align.</span><span class="en-only">Tick
+                the viewports/schedules/legends to align.</span></li>
+            <li><span class="vi-only">Bấm <strong>Pick template viewport</strong> → click 1 viewport mẫu trong Revit
+                làm chuẩn toạ độ.</span><span class="en-only">Click <strong>Pick template viewport</strong> → click a
+                template viewport in Revit as the coordinate reference.</span></li>
+            <li><span class="vi-only">Tick chọn Position/Title/Type cần align → bấm <strong>Apply</strong>.</span><span
+                class="en-only">Tick Position/Title/Type as needed → click <strong>Apply</strong>.</span></li>
+          </ol>
+        </article>
+
+        <article id="find-view" data-img="screenshots/Find View.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#F59E0B">FV</div>
+            <div class="module-title">Find View <span class="en">/ Find View</span><span class="panel">Sheets</span>
+            </div>
+          </div>
+          <p>
+            <span class="vi-only">Tìm một View hiện đang được đặt trên những Sheet nào. Đặc biệt hữu ích với
+              <strong>Legend</strong> và <strong>Schedule</strong> vì có thể nằm trên nhiều sheet cùng lúc.</span>
+            <span class="en-only">Finds which Sheets a View is currently placed on. Especially useful for
+              <strong>Legends</strong> and <strong>Schedules</strong>, which may appear on many sheets.</span>
+          </p>
+
+          <h4><span class="vi-only">Bố cục 2 cột</span><span class="en-only">2-column layout</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Cột trái — All Views:</strong> toàn bộ view trong project kèm số Sheet đang chứa.</span><span class="en-only"><strong>Left column — All Views:</strong> all views in the project with their Sheet count.</span></li>
+            <li><span class="vi-only"><strong>Cột phải — Sheets of selected view:</strong> click 1 dòng bên trái → liệt kê các Sheet đang chứa view đó.</span><span class="en-only"><strong>Right column — Sheets of selected view:</strong> click a row on the left → lists every Sheet containing that view.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Click <strong>Find View</strong> → tool liệt kê toàn bộ view trong
+                project.</span><span class="en-only">Click <strong>Find View</strong> → the tool lists every view in
+                the project.</span></li>
+            <li><span class="vi-only">Gõ search hoặc dùng cascading filter để tìm view.</span><span
+                class="en-only">Type in the search box or use the cascading filter to find the view.</span></li>
+            <li><span class="vi-only">Click chọn 1 view → xem ngay danh sách Sheet đang chứa view đó ở bảng
+                phải.</span><span class="en-only">Click a view → the right table immediately shows every Sheet
+                containing it.</span></li>
+          </ol>
+        </article>
+      </section>
+
+      <!-- ============ PANEL EXPORT ============ -->
+      <section id="panel-export">
+        <h2>12. Panel · Export</h2>
+
+        <article id="export-sheet-view" data-img="screenshots/Export Sheet View.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#F59E0B">EX</div>
+            <div class="module-title">Export Sheet / View <span class="en">/ Export Sheet / View</span><span
+                class="panel">Export</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Xuất hàng loạt <strong>Sheet</strong> và <strong>View</strong> ra PDF / DWG. Hỗ trợ
+              chọn tập sheet/view, cấu hình định dạng, đặt tên file theo template và lưu/nạp profile dùng lại.</span>
+            <span class="en-only">Batch-exports <strong>Sheets</strong> and <strong>Views</strong> to PDF / DWG.
+              Supports picking the export set, configuring formats, naming files by template, and saving/loading
+              reusable profiles.</span>
+          </p>
+
+          <div class="card blue">
+            <p style="margin:0;">
+              <span class="vi-only">Cửa sổ chạy theo kiểu <strong>wizard 4 bước</strong> (Selection → Formats → Create → Option). Phía trên 4 tab luôn có 1 thanh <strong>Profile</strong> dùng chung để lưu và nạp lại toàn bộ cấu hình.</span>
+              <span class="en-only">The window runs as a <strong>4-step wizard</strong> (Selection → Formats → Create → Option). Above the 4 tabs there is always a shared <strong>Profile</strong> bar for saving and reloading the entire configuration.</span>
+            </p>
+          </div>
+
+          <h4><span class="vi-only">Tab 1 — Selection</span><span class="en-only">Tab 1 — Selection</span></h4>
+          <p>
+            <span class="vi-only">Chọn nguồn xuất là Sheets hoặc Views, sau đó tick chọn tập cần xuất từ danh sách.</span>
+            <span class="en-only">Choose whether to export Sheets or Views, then tick the items to include in the export.</span>
+          </p>
+
+          <h4><span class="vi-only">Tab 2 — Formats (2 sub-tab PDF / DWG)</span><span class="en-only">Tab 2 — Formats (2 sub-tabs PDF / DWG)</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>PDF:</strong> Cấu hình khổ giấy, hướng trang, Print Engine (Revit Native hoặc PDF24), và chế độ gộp file — xuất riêng từng file, gộp tất cả thành 1 PDF, hoặc gộp theo nhóm. Khi dùng chế độ Combine, có thể sắp thứ tự sheet/view trong file PDF cuối.</span><span class="en-only"><strong>PDF:</strong> Configure paper size, orientation, Print Engine (Revit Native or PDF24), and merge mode — export as individual files, combine all into one PDF, or combine per group. When using Combine mode, you can set the sheet/view order in the final PDF.</span></li>
+            <li><span class="vi-only"><strong>DWG:</strong> Bật/tắt xuất DWG, chọn Export Setup đã cấu hình trong Revit và phiên bản DWG cần xuất.</span><span class="en-only"><strong>DWG:</strong> Enable or disable DWG export, choose a Revit-configured Export Setup, and pick the target DWG version.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Tab 3 — Create</span><span class="en-only">Tab 3 — Create</span></h4>
+          <p>
+            <span class="vi-only">Xem trước danh sách đầy đủ các file sắp xuất, chỉnh nhanh khổ giấy hoặc hướng trang cho từng sheet nếu cần, rồi bấm Export để bắt đầu.</span>
+            <span class="en-only">Preview the full list of files to be exported, quickly adjust paper size or orientation per sheet if needed, then click Export to start.</span>
+          </p>
+
+          <h4><span class="vi-only">Tab 4 — Option</span><span class="en-only">Tab 4 — Option</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Export Rules:</strong> Đặt thư mục đích và chọn xuất tất cả vào 1 folder hay tách riêng PDF/DWG.</span><span class="en-only"><strong>Export Rules:</strong> Set the output folder and choose whether to export everything into one folder or separate PDF and DWG.</span></li>
+            <li><span class="vi-only"><strong>Sub-folder:</strong> Xây cấu trúc thư mục con nhiều cấp, mỗi cấp dùng 1 parameter làm tên folder.</span><span class="en-only"><strong>Sub-folder:</strong> Build a multi-level subfolder structure, using a parameter as the folder name at each level.</span></li>
+            <li><span class="vi-only"><strong>Filename Builder:</strong> Ghép tên file từ nhiều parameter, tùy chỉnh thứ tự và ký tự phân cách.</span><span class="en-only"><strong>Filename Builder:</strong> Compose the filename from multiple parameters, with custom ordering and separators.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Tab Selection: chọn Sheets hoặc Views, tick tập cần xuất.</span><span
+                class="en-only">Selection tab: choose Sheets or Views, tick the set to export.</span></li>
+            <li><span class="vi-only">Bấm <strong>Next</strong> sang tab Formats: cấu hình PDF/DWG cần thiết.</span><span
+                class="en-only">Click <strong>Next</strong> to the Formats tab: configure the PDF/DWG settings you
+                need.</span></li>
+            <li><span class="vi-only">Bấm <strong>Next</strong> sang tab Create: kiểm tra bảng preview, chỉnh nhanh
+                khổ giấy/orientation nếu cần.</span><span class="en-only">Click <strong>Next</strong> to the Create
+                tab: review the preview table, quickly adjust paper size/orientation if needed.</span></li>
+            <li><span class="vi-only">(Tuỳ chọn) Vào tab Option để đặt Output Folder, cấu trúc sub-folder, Filename
+                Builder, thứ tự combine.</span><span class="en-only">(Optional) Go to the Option tab to set the
+                Output Folder, sub-folder structure, Filename Builder, and combine order.</span></li>
+            <li><span class="vi-only">Quay lại tab Create → bấm <strong>Export</strong>. Xuất xong, popup hiện nút
+                <strong>Open PDF</strong> (nếu có combine) và <strong>Open Folder</strong>.</span><span
+                class="en-only">Go back to the Create tab → click <strong>Export</strong>. When done, a popup shows
+                an <strong>Open PDF</strong> button (if combined) and <strong>Open Folder</strong>.</span></li>
+          </ol>
+        </article>
+      </section>
+
+      <!-- ============ PANEL REVISION ============ -->
+      <section id="panel-revision">
+        <h2>13. Panel · Revision</h2>
+
+        <article id="add-remove-revision" data-img="screenshots/Revision.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#F97316">Rev</div>
+            <div class="module-title">Revision <span class="en">/ Revision</span><span class="panel">Revision</span>
+            </div>
+          </div>
+          <p>
+            <span class="vi-only">Thêm hoặc xoá <strong>Revision</strong> trên nhiều Sheet hàng loạt.</span>
+            <span class="en-only">Adds or removes a <strong>Revision</strong> from many Sheets in batch.</span>
+          </p>
+
+          <h4><span class="vi-only">Bố cục 2 cột</span><span class="en-only">2-column layout</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Cột trái — Revision:</strong> Danh sách Revision trong project để chọn Revision cần xử lý.</span><span class="en-only"><strong>Left column — Revision:</strong> List of Revisions in the project — select which Revision to process.</span></li>
+            <li><span class="vi-only"><strong>Cột phải — Sheet:</strong> Danh sách Sheet để tick những sheet cần gán hoặc gỡ revision; hỗ trợ chọn nhanh theo Sheet Schedule có sẵn.</span><span class="en-only"><strong>Right column — Sheet:</strong> List of Sheets — tick the ones that should have or lose the revision; supports quick selection from an existing Sheet Schedule.</span></li>
+          </ul>
+
+          <div class="card blue">
+            <p style="margin:0;">
+              <span class="vi-only"><strong>Cơ chế Apply:</strong> đây là thao tác đồng bộ 2 chiều, không phải 2 nút
+                Add/Remove riêng — tick các Revision cần xử lý ở cột trái, tick các Sheet cần <em>có</em> revision đó ở
+                cột phải, rồi bấm <strong>Apply</strong>: sheet đã tick sẽ được <strong>thêm</strong> revision, sheet
+                chưa tick sẽ bị <strong>gỡ</strong> revision đó (nếu đang có) — trong cùng 1 lần bấm.</span>
+              <span class="en-only"><strong>Apply mechanism:</strong> this is a 2-way sync, not two separate Add/Remove
+                buttons — tick the Revisions to process on the left, tick the Sheets that should <em>have</em> that
+                revision on the right, then click <strong>Apply</strong>: ticked sheets get the revision
+                <strong>added</strong>, unticked sheets get it <strong>removed</strong> (if present) — all in one
+                click.</span>
+            </p>
+          </div>
+
+          <h4><span class="vi-only">Quy trình điển hình</span><span class="en-only">Typical workflow</span></h4>
+          <ol class="step-list">
+            <li><span class="vi-only">Tick 1 hoặc nhiều Revision cần xử lý ở cột trái.</span><span class="en-only">Tick
+                one or more Revisions to process on the left.</span></li>
+            <li><span class="vi-only">Ở cột phải, tick đúng những Sheet cần <em>giữ/gán</em> revision đó (dùng dropdown
+                Select Sheet Schedule để tick nhanh theo bộ Sheet List có sẵn nếu cần).</span><span
+                class="en-only">On the right, tick exactly the Sheets that should <em>keep/get</em> that revision (use
+                the Select Sheet Schedule dropdown to quickly tick a predefined Sheet List set if needed).</span></li>
+            <li><span class="vi-only">Bấm <strong>Apply</strong> — tool tự thêm ở sheet đã tick, gỡ ở sheet chưa
+                tick.</span><span class="en-only">Click <strong>Apply</strong> — the tool adds it on ticked sheets and
+                removes it from unticked sheets.</span></li>
+          </ol>
+        </article>
+
+        <article id="cloud-revision-manager" data-img="screenshots/Cloud Manager.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#3B82F6">CR</div>
+            <div class="module-title">Cloud Manager <span class="en">/ Cloud Revision Manager</span><span
+                class="panel">Revision</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Quản lý màu nét, loại nét, chiều dày nét của <strong>Revision Cloud</strong>; đồng
+              thời rà soát cloud đang nằm trên sheet/view nào để kiểm tra phát hành.</span>
+            <span class="en-only">Manages line colour, line type, and line weight of <strong>Revision Clouds</strong>;
+              also lets you inspect which sheet/view each cloud belongs to for issue control.</span>
+          </p>
+
+          <h4><span class="vi-only">Bố cục 2 cột</span><span class="en-only">2-column layout</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Cột trái — Revision:</strong> Danh sách Revision để chỉnh màu, độ dày và loại nét cho Revision Cloud; xem trước nét mẫu ngay trên lưới.</span><span class="en-only"><strong>Left column — Revision:</strong> List of Revisions to set cloud line colour, weight, and pattern; a live stroke preview updates on the grid.</span></li>
+            <li><span class="vi-only"><strong>Cột phải — Sheet / View:</strong> Rà soát cloud đang nằm trên Sheet hoặc View nào; tab View giúp phát hiện cloud "trôi nổi" ở view chưa đặt lên sheet.</span><span class="en-only"><strong>Right column — Sheet / View:</strong> Inspect which Sheets or Views contain clouds; the View tab helps spot clouds "floating" in views not yet placed on any sheet.</span></li>
+          </ul>
+
+          <h4><span class="vi-only">Footer — 4 hành động</span><span class="en-only">Footer — 4 actions</span></h4>
+          <ul>
+            <li><span class="vi-only"><strong>Apply Style</strong> — ghi Color/Weight/Pattern đã chỉnh trên grid trái
+                vào các Revision Cloud tương ứng.</span><span class="en-only"><strong>Apply Style</strong> — writes
+                the Color/Weight/Pattern edited in the left grid to the matching Revision Clouds.</span></li>
+            <li><span class="vi-only"><strong>Remove Style</strong> — reset style override, trả cloud về mặc định
+                theo Line Style gốc.</span><span class="en-only"><strong>Remove Style</strong> — clears the style
+                override, reverting clouds to their original Line Style default.</span></li>
+            <li><span class="vi-only"><strong>Delete Clouds on Locations</strong> — xoá hẳn Revision Cloud tại các
+                sheet/view đang tick ở cột phải (dùng khi phát hành xong, cần dọn cloud của đợt cũ).</span><span
+                class="en-only"><strong>Delete Clouds on Locations</strong> — permanently deletes the Revision Clouds
+                at the sheets/views ticked in the right column (used after issuing, to clean up an old batch's
+                clouds).</span></li>
+            <li><span class="vi-only"><strong>Reload</strong> — quét lại toàn bộ dữ liệu Revision + Cloud từ
+                Revit.</span><span class="en-only"><strong>Reload</strong> — rescans all Revision + Cloud data from
+                Revit.</span></li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- ============ PANEL TIMELINE ============ -->
+      <section id="panel-timeline">
+        <h2>14. Panel · Revit Model Timeline</h2>
+        <p>
+          <span class="vi-only">2 nút quản lý báo cáo hoạt động của user trên project. Addin tự động ghi log mọi sự kiện
+            (mở/lưu/sync/print/export, đổi view, sửa element) vào file JSONL.</span>
+          <span class="en-only">2 buttons managing the user activity report for the project. The add-in auto-logs every
+            event (open/save/sync/print/export, view changes, element edits) into JSONL files.</span>
+        </p>
+
+        <!-- TOOLS -->
+        <article id="tools-cmd" data-img="screenshots/Tools.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#6B7280">⚙</div>
+            <div class="module-title">Tools <span class="en">/ Tools</span><span class="panel">Revit Model
+                Timeline</span></div>
+          </div>
+          <p>
+            <span class="vi-only">Mở dialog <strong>Lab84 Tools</strong> với 3 section:</span>
+            <span class="en-only">Opens the <strong>Lab84 Tools</strong> dialog with 3 sections:</span>
+          </p>
+          <ol>
+            <li><strong><span class="vi-only">Trạng thái session</span><span class="en-only">Session
+                  status</span></strong> — <span class="vi-only">Session ID, addin/Revit version, user/machine, log
+                root, số event hôm nay, license.</span><span class="en-only">Session ID, addin/Revit version,
+                user/machine, log root, today's event count, license.</span></li>
+            <li><strong><span class="vi-only">Folder log (dùng chung cả team)</span><span class="en-only">Log folder
+                  (shared by team)</span></strong> —
+              <span class="vi-only">TextBox hiển thị Log root + 4 nút: <em>Chọn folder…</em> (pick OneDrive/SharePoint
+                shared) · <em>Mở trong Explorer</em> · <em>Mở folder máy này</em> · <em>Xuất 30d → Desktop</em> (zip 30
+                ngày JSONL gần nhất).</span>
+              <span class="en-only">TextBox showing Log root + 4 buttons: <em>Choose folder…</em> (pick a shared
+                OneDrive/SharePoint folder) · <em>Open in Explorer</em> · <em>Open this machine's folder</em> ·
+                <em>Export 30d → Desktop</em> (zip the last 30 days of JSONL).</span>
+            </li>
+            <li><strong><span class="vi-only">Bật/tắt nhóm event ghi log</span><span class="en-only">Event logging
+                  toggles</span></strong> —
+              <span class="vi-only">Checkbox chủ <strong>Bật Timeline (ghi log hoạt động)</strong> — tắt hẳn checkbox
+                này sẽ ngừng subscribe mọi event (giảm lag khi làm việc trên ACC/Cloud), cần <strong>khởi động lại
+                  Revit</strong> để có hiệu lực đầy đủ. Khi bật Timeline, 3 checkbox con điều khiển từng nhóm:
+                <em>Ghi ViewActivated</em> (chuyển view), <em>Ghi Command event</em> (Print/Export…), <em>Ghi
+                  DocChanged</em> (thay đổi element) — và 1 checkbox cháu <em>Ghi Parameter của element (chậm
+                  hơn)</em> chỉ bật được khi DocChanged đang bật. Tắt nhóm nào → không ghi log nhóm đó; lưu vào
+                UserConfig ngay khi tick.</span>
+              <span class="en-only">A master <strong>Enable Timeline (activity logging)</strong> checkbox — turning
+                this off stops subscribing to any event (reduces lag when working on ACC/Cloud); a
+                <strong>Revit restart</strong> is required for it to fully take effect. When Timeline is on, 3
+                sub-checkboxes control each group: <em>Log ViewActivated</em> (view switching), <em>Log Command
+                  event</em> (Print/Export…), <em>Log DocChanged</em> (element changes) — plus a nested
+                <em>Log element parameters (slower)</em> checkbox only enabled while DocChanged is on. Unticking a
+                group stops logging it; saved to UserConfig immediately.</span>
+            </li>
+          </ol>
+          <div class="card amber">
+            <span class="vi-only"><strong>Setup team:</strong> 1 thành viên pick folder shared (OneDrive/SharePoint)
+              bằng <em>Chọn folder…</em> → addin tự sync sang <code>admin-settings.json</code> để Report đọc cùng
+              folder. Mọi user trong team mở Report đều thấy log toàn team.</span>
+            <span class="en-only"><strong>Team setup:</strong> one team member picks a shared folder
+              (OneDrive/SharePoint) via <em>Choose folder…</em> → the add-in syncs this to
+              <code>admin-settings.json</code> so the Report reads the same folder. Every team member then sees the
+              entire team's log in Report.</span>
+          </div>
+        </article>
+
+        <!-- REPORT -->
+        <article id="report-cmd" data-img="screenshots/Report.png" class="module-card">
+          <div class="module-head">
+            <div class="module-glyph" style="background:#7C3AED">■</div>
+            <div class="module-title">Report <span class="en">/ Report</span><span class="panel">Revit Model
+                Timeline</span></div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Tab</th>
+                <th><span class="vi-only">Nội dung</span><span class="en-only">Content</span></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="vi-only">Home (Tổng quan)</span><span class="en-only">Home (Overview)</span></td>
+                <td><span class="vi-only">Welcome + chọn project / khoảng ngày lookback; bảng <em>Top Event Types</em>
+                    7 cột (EventType, Command name, Command ID, Count, User, First seen, Last seen).</span><span
+                    class="en-only">Welcome + project picker / day lookback range; a 7-column <em>Top Event
+                      Types</em> table (EventType, Command name, Command ID, Count, User, First seen, Last
+                    seen).</span></td>
+              </tr>
+              <tr>
+                <td>Dashboard</td>
+                <td><span class="vi-only">Tổng quan: số session, số document, top user, top command, biểu đồ giờ làm
+                    việc.</span><span class="en-only">Overview: session count, document count, top users, top commands,
+                    work-hour charts.</span></td>
+              </tr>
+              <tr>
+                <td>Timeline</td>
+                <td><span class="vi-only">Trục thời gian từng ngày: ai mở document nào lúc mấy giờ, sync khi nào —
+                    tô màu nền theo loại event (DocSync xanh dương, DocSave/SaveAs xanh lá, DocOpen cam, DocClose đỏ,
+                    v.v.).</span><span class="en-only">Daily timeline: who opened which document at what time, sync
+                    events — rows color-coded by event type (DocSync blue, DocSave/SaveAs green, DocOpen orange,
+                    DocClose red, etc.).</span></td>
+              </tr>
+              <tr>
+                <td>Details</td>
+                <td><span class="vi-only">Raw event JSONL — filter, search, sort.</span><span class="en-only">Raw JSONL
+                    events — filter, search, sort.</span></td>
+              </tr>
+              <tr>
+                <td>Users</td>
+                <td><span class="vi-only">Bảng tổng hợp theo user.</span><span class="en-only">Per-user summary.</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Files</td>
+                <td><span class="vi-only">Bảng tổng hợp theo file project.</span><span class="en-only">Per-project-file
+                    summary.</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <span class="vi-only"><strong>Export:</strong> nút <em>Export Report</em> xuất file Excel 7 sheet hoặc HTML
+              self-contained.</span>
+            <span class="en-only"><strong>Export:</strong> the <em>Export Report</em> button exports a 7-sheet Excel or
+              a self-contained HTML.</span>
+          </p>
+        </article>
+      </section>
+
+      <!-- ============ TROUBLESHOOT ============ -->
+      <section id="troubleshoot">
+        <h2>15. <span class="vi-only">Xử lý sự cố</span><span class="en-only">Troubleshooting</span></h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th><span class="vi-only">Triệu chứng</span><span class="en-only">Symptom</span></th>
+              <th><span class="vi-only">Cách xử lý</span><span class="en-only">Resolution</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="vi-only">Không thấy tab <code>Lab84</code> trong Revit</span><span class="en-only">No
+                  <code>Lab84</code> tab in Revit</span></td>
+              <td><span class="vi-only">Kiểm tra <code>%APPDATA%\Autodesk\ApplicationPlugins\Lab84.bundle\</code> có
+                  folder năm Revit đang dùng. Đóng Revit hoàn toàn, mở lại.</span><span class="en-only">Check
+                  <code>%APPDATA%\Autodesk\ApplicationPlugins\Lab84.bundle\</code> has the right Revit-year folder.
+                  Fully close Revit, reopen.</span></td>
+            </tr>
+            <tr>
+              <td><span class="vi-only">Tab có nhưng click button không phản hồi</span><span class="en-only">Tab visible
+                  but buttons do nothing</span></td>
+              <td><span class="vi-only">Mở runtime log <code>%LOCALAPPDATA%\Lab84\Logs\Client\yyyy-MM-dd.log</code>
+                  &rarr; tìm dòng ERROR. Cài lại bằng installer nếu thiếu DLL.</span><span class="en-only">Open the
+                  runtime log <code>%LOCALAPPDATA%\Lab84\Logs\Client\yyyy-MM-dd.log</code> &rarr; look for ERROR
+                  lines. Reinstall if DLLs are missing.</span></td>
+            </tr>
+            <tr>
+              <td><span class="vi-only">Tool nghiệp vụ bị khóa (License required)</span><span class="en-only">Business
+                  tools locked (License required)</span></td>
+              <td><span class="vi-only">Trial 30 ngày đã hết. Vào panel Admin &rarr; License &rarr; Copy Machine ID
+                  &rarr; gửi vendor.</span><span class="en-only">30-day trial expired. Admin panel &rarr; License &rarr;
+                  Copy Machine ID &rarr; email vendor.</span></td>
+            </tr>
+            <tr>
+              <td><span class="vi-only">Report mở ra "Scanned 0 files"</span><span class="en-only">Report shows "Scanned
+                  0 files"</span></td>
+              <td><span class="vi-only">Chưa pick folder log. Vào Tools &rarr; section Folder log &rarr; Chọn folder
+                  &rarr; pick OneDrive/SharePoint shared.</span><span class="en-only">No log folder picked. Tools &rarr;
+                  Log folder section &rarr; Choose folder &rarr; pick a shared folder.</span></td>
+            </tr>
+            <tr>
+              <td><span class="vi-only">Pile Dim báo "View hiện tại không phải Plan View"</span><span
+                  class="en-only">Pile Dim says "Active view is not a Plan View"</span></td>
+              <td><span class="vi-only">Pile Dim chỉ chạy trên Plan View. Chuyển sang Plan View đúng level rồi chạy
+                  lại.</span><span class="en-only">Pile Dim only runs on Plan Views. Switch to the right Plan View,
+                  retry.</span></td>
+            </tr>
+            <tr>
+              <td><span class="vi-only">Excel Link không auto-refresh sau khi sửa Excel</span><span
+                  class="en-only">Excel Link does not auto-refresh after editing</span></td>
+              <td><span class="vi-only">Chỉ bảng đã bật cột <em>Auto</em> mới tự theo dõi file. Lưu file Excel (Ctrl+S)
+                  — FileSystemWatcher chỉ trigger sau khi file ghi xong. Nếu vẫn chưa cập nhật, dùng dropdown
+                  <strong>Batch Actions → Batch Reload/Reload All</strong> trong tab Links.</span><span
+                  class="en-only">Only tables with the <em>Auto</em> column enabled watch the file automatically. Save
+                  the Excel (Ctrl+S) — FileSystemWatcher fires only after the write completes. If it's still not
+                  updated, use the <strong>Batch Actions → Batch Reload/Reload All</strong> dropdown in the Links
+                  tab.</span></td>
+            </tr>
+            <tr>
+              <td><span class="vi-only">Style Manager xóa Style báo "in use"</span><span class="en-only">Style Manager
+                  refuses to delete a style ("in use")</span></td>
+              <td><span class="vi-only">Sort cột Usage &rarr; click số Usage để xem element đang dùng &rarr; chuyển sang
+                  style khác rồi xóa. Hoặc dùng Merge.</span><span class="en-only">Sort by Usage &rarr; click the count
+                  to see using elements &rarr; switch them, then delete. Or use Merge.</span></td>
+            </tr>
+            <tr>
+              <td><span class="vi-only">Đổi ngôn ngữ không có hiệu lực cho cửa sổ cũ</span><span
+                  class="en-only">Language switch does not take effect on an older window</span></td>
+              <td><span class="vi-only">Đóng và mở lại cửa sổ đó.</span><span class="en-only">Close and reopen that
+                  window.</span></td>
+            </tr>
+            <tr>
+              <td><span class="vi-only">Parameter Manager: đổi Categories binding của Project Parameter không được
+                  lưu lại sau khi Save</span><span class="en-only">Parameter Manager: changing a Project Parameter's
+                  Categories binding doesn't persist after Save</span></td>
+              <td><span class="vi-only">Giới hạn của Revit API — không có đường API nào ghi được thay đổi Categories
+                  cho Project Parameter (khác Shared Parameter). Chỉ <strong>Remove</strong> (xoá hẳn) là hoạt động
+                  qua tool; muốn đổi Categories binding, dùng dialog gốc Revit:
+                  <code>Manage → Project Parameters → Edit</code>.</span><span class="en-only">A Revit API limitation
+                  — there is no API path that can persist a Categories change for a Project Parameter (unlike a
+                  Shared Parameter). Only <strong>Remove</strong> (deleting it) works through the tool; to change the
+                  Categories binding, use Revit's native dialog:
+                  <code>Manage → Project Parameters → Edit</code>.</span></td>
+            </tr>
+            <tr>
+              <td><span class="vi-only">Style Manager: tab Line Styles không Rename/Delete được 1 số dòng (vd
+                  <code>&lt;Sketch&gt;</code>, <code>&lt;Hidden&gt;</code>, <code>&lt;Centerline&gt;</code>)</span><span
+                  class="en-only">Style Manager: the Line Styles tab can't Rename/Delete certain rows (e.g.
+                  <code>&lt;Sketch&gt;</code>, <code>&lt;Hidden&gt;</code>, <code>&lt;Centerline&gt;</code>)</span></td>
+              <td><span class="vi-only">Đây là các Line Style hệ thống của Revit (hardwired) — Revit tự cấm
+                  Rename/Delete, không phải lỗi tool. Vẫn sửa được bình thường Color/Weight/Pattern của các
+                  dòng này.</span><span class="en-only">These are Revit's own built-in (hardwired) Line Styles — Revit
+                  itself blocks Rename/Delete, this isn't a tool bug. Their Color/Weight/Pattern can still be edited
+                  normally.</span></td>
+            </tr>
+            <tr>
+              <td><span class="vi-only">Export Sheet/View: checkbox <em>Hide View Tags</em> (và các checkbox ẩn
+                  khác ở nhóm Options) không có tác dụng khi xuất PDF</span><span class="en-only">Export Sheet/View:
+                  the <em>Hide View Tags</em> checkbox (and the other Options hide-checkboxes) has no effect when
+                  exporting PDF</span></td>
+              <td><span class="vi-only">Chỉ xảy ra khi <strong>Print Engine</strong> đang chọn là <em>PDF24 Virtual
+                    Printer</em> — đây là giới hạn của chính PrintManager/PDF24, không honor các cờ ẩn view tag.
+                  Chuyển Print Engine sang <strong>Revit Native</strong> (tab Formats) nếu bắt buộc cần ẩn view
+                  tag.</span><span class="en-only">This only happens when <strong>Print Engine</strong> is set to
+                  <em>PDF24 Virtual Printer</em> — a limitation of PrintManager/PDF24 itself, which doesn't honor
+                  view-tag-hiding flags. Switch Print Engine to <strong>Revit Native</strong> (Formats tab) if hiding
+                  view tags is required.</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>15.1 <span class="vi-only">Excel Link — Ý nghĩa 6 trạng thái link</span><span class="en-only">Excel Link —
+            meaning of the 6 link statuses</span></h3>
+        <p>
+          <span class="vi-only">Mỗi bảng Excel trong tab <em>Links</em> có 1 badge trạng thái (màu). Bấm nút
+            <strong>"?"</strong> cạnh ô Search trong tool để xem lại bảng này ngay trong Revit. Ý nghĩa và cách xử lý
+            từng trạng thái:</span>
+          <span class="en-only">Every Excel table in the <em>Links</em> tab has a colored status badge. Click the
+            <strong>"?"</strong> button next to the Search box in the tool to see this reference right inside Revit.
+            Meaning and fix for each status:</span>
+        </p>
+        <table>
+          <thead>
+            <tr>
+              <th><span class="vi-only">Trạng thái (màu)</span><span class="en-only">Status (color)</span></th>
+              <th><span class="vi-only">Ý nghĩa</span><span class="en-only">Meaning</span></th>
+              <th><span class="vi-only">Cách xử lý</span><span class="en-only">Fix</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="badge green">Unchanged</span></td>
+              <td><span class="vi-only">Không có gì thay đổi từ lần insert/reload gần nhất.</span><span
+                  class="en-only">Nothing has changed since the last insert/reload.</span></td>
+              <td><span class="vi-only">Không cần làm gì.</span><span class="en-only">No action needed.</span></td>
+            </tr>
+            <tr>
+              <td><span class="badge red">Changed</span></td>
+              <td><span class="vi-only">File Excel nguồn đã có thay đổi.</span><span class="en-only">The source Excel
+                  file has changed.</span></td>
+              <td><span class="vi-only">Bấm Reload (hoặc bật cột Auto để tự cập nhật).</span><span class="en-only">Click
+                  Reload (or enable the Auto column for automatic updates).</span></td>
+            </tr>
+            <tr>
+              <td><span class="badge red-dark">SourceMissing</span></td>
+              <td><span class="vi-only">File Excel không còn tồn tại ở đường dẫn cũ — đã bị xóa, đổi tên, hoặc di
+                  chuyển (kể cả khi chỉ đổi tên folder cha làm lệch relative path).</span><span class="en-only">The
+                  Excel file no longer exists at its old path — deleted, renamed, or moved (even just renaming a
+                  parent folder can break a relative path).</span></td>
+              <td><span class="vi-only">Sửa lại đường dẫn từng dòng qua nút Edit (pencil), hoặc chọn nhiều dòng rồi
+                  dùng <strong>Batch Actions → Relocate/Relocate Folder</strong> để trỏ lại hàng loạt.</span><span
+                  class="en-only">Fix the path per row via the Edit (pencil) button, or select several rows and use
+                  <strong>Batch Actions → Relocate/Relocate Folder</strong> to re-point them in bulk.</span></td>
+            </tr>
+            <tr>
+              <td><span class="badge cyan">InMemoryOnly</span></td>
+              <td><span class="vi-only">Bảng vừa được insert nhưng Revit document chưa lưu lần nào — link chỉ tồn tại
+                  tạm trong bộ nhớ.</span><span class="en-only">The table was just inserted but the Revit document
+                  hasn't been saved yet — the link only exists temporarily in memory.</span></td>
+              <td><span class="vi-only">Lưu Revit (Ctrl+S) để ghi link vĩnh viễn vào file.</span><span
+                  class="en-only">Save Revit (Ctrl+S) to persist the link into the file.</span></td>
+            </tr>
+            <tr>
+              <td><span class="badge pink">ProbeError</span></td>
+              <td><span class="vi-only">Đọc được đường dẫn file nhưng lỗi khi mở nội dung — sheet trong link đã bị xóa
+                  khỏi workbook, vùng range không còn hợp lệ, hoặc file Excel bị hỏng định dạng. (File đang mở sẵn
+                  trong Excel <em>không</em> phải nguyên nhân — tool tự retry đọc file khi bị khóa
+                  tạm thời.)</span><span class="en-only">The file path resolves but reading its content fails — the
+                  linked sheet was removed from the workbook, the range is no longer valid, or the Excel file's format
+                  is corrupted. (Having the file already open in Excel is <em>not</em> the cause — the tool
+                  automatically retries reading a momentarily locked file.)</span></td>
+              <td><span class="vi-only">Mở file Excel kiểm tra sheet/range còn đúng không; nếu file hỏng, mở & lưu lại
+                  bằng Excel rồi Reload.</span><span class="en-only">Open the Excel file to check the sheet/range is
+                  still valid; if the file is corrupted, open & re-save it in Excel, then Reload.</span></td>
+            </tr>
+            <tr>
+              <td><span class="badge">Empty</span></td>
+              <td><span class="vi-only">Trạng thái mặc định ngay sau khi vừa mở lại Revit — link chưa được kiểm tra
+                  (probe) lần nào trong phiên này.</span><span class="en-only">The default state right after
+                  reopening Revit — the link hasn't been probed yet this session.</span></td>
+              <td><span class="vi-only">Bấm <strong>Refresh</strong> để tool probe lại toàn bộ trạng thái.</span><span
+                  class="en-only">Click <strong>Refresh</strong> to have the tool re-probe every status.</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>15.2 <span class="vi-only">Excel Link — sự cố khác</span><span class="en-only">Excel Link — other
+            issues</span></h3>
+        <table>
+          <thead>
+            <tr>
+              <th><span class="vi-only">Triệu chứng</span><span class="en-only">Symptom</span></th>
+              <th><span class="vi-only">Cách xử lý</span><span class="en-only">Resolution</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="vi-only">Màu ô trong bảng render ra khác với Conditional Formatting phức tạp trong file
+                  Excel gốc</span><span class="en-only">Cell colors render differently from complex Conditional
+                  Formatting in the source Excel file</span></td>
+              <td><span class="vi-only">Revit không hỗ trợ fill pattern thực — với pattern không phải Solid, tool xấp
+                  xỉ bằng cách tô solid theo màu nền của pattern đó. Nếu cần đúng 100% màu gốc, đổi định dạng cell
+                  trong Excel sang Solid fill trước khi insert.</span><span class="en-only">Revit doesn't support real
+                  fill patterns — for non-Solid patterns, the tool approximates by filling solid with that pattern's
+                  background color. For an exact color match, change the cell format in Excel to a Solid fill before
+                  inserting.</span></td>
+            </tr>
+            <tr>
+              <td><span class="vi-only">Cỡ chữ trong bảng Revit to/nhỏ hơn so với Excel gốc</span><span
+                  class="en-only">Text size in the Revit table is larger/smaller than the source Excel</span></td>
+              <td><span class="vi-only">Excel đo cỡ chữ theo em-size, Revit TextNote đo theo cap-height — 2 đơn vị khác
+                  nhau. Kiểm tra tuỳ chọn <em>UseExcelTextSize</em> trong Table Style preset đang dùng, hoặc chỉnh cỡ
+                  chữ preset theo mm cap-height cho khớp bản vẽ.</span><span class="en-only">Excel measures text size
+                  in em-size while Revit TextNote measures in cap-height — two different units. Check the
+                  <em>UseExcelTextSize</em> option on the Table Style preset in use, or adjust the preset's font size
+                  in mm cap-height to match your drawing standard.</span></td>
+            </tr>
+            <tr>
+              <td><span class="vi-only">Bấm OK ở dialog "Chèn bảng Excel" không có phản ứng gì, bảng không được
+                  tạo</span><span class="en-only">Clicking OK in the "Insert Excel Table" dialog does nothing, no table
+                  is created</span></td>
+              <td><span class="vi-only">Thường gặp khi mở tool qua Addin Manager thay vì bundle cài chuẩn. Cài addin
+                  bằng installer chính thức (Rule cài đặt ở mục 2) thay vì load rời qua Addin Manager.</span><span
+                  class="en-only">Usually happens when the tool is loaded via Addin Manager instead of the standard
+                  installed bundle. Install the add-in via the official installer (see section 2) instead of loading
+                  it loosely through Addin Manager.</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>15.3 <span class="vi-only">Log để gửi support</span><span class="en-only">Logs to attach to support</span>
+        </h3>
+        <ul>
+          <li><strong>Runtime log:</strong> <code>%LOCALAPPDATA%\Lab84\Logs\Client\yyyy-MM-dd.log</code></li>
+          <li><strong>Config:</strong> <code>%LOCALAPPDATA%\Lab84\config.json</code></li>
+          <li><strong>License state:</strong> <code>%LOCALAPPDATA%\Lab84\trial.dat</code> / <code>license.lic</code>
+          </li>
+          <li><strong>Activity log JSONL:</strong> <span class="vi-only">tại folder Log root user đã pick.</span><span
+              class="en-only">at the Log root folder picked by the user.</span></li>
+        </ul>
+      </section>
+
+      <!-- ============ CONTACT ============ -->
+      <section id="contact">
+        <h2>16. <span class="vi-only">Liên hệ &amp; cập nhật</span><span class="en-only">Contact &amp; updates</span>
+        </h2>
+        <div class="card amber">
+          <p><strong>Vendor:</strong> Hiển Phan</p>
+          <p><strong>Email:</strong> pnh.nhonly@gmail.com</p>
+          <p><strong>Zalo:</strong> <a href="https://zalo.me/g/vx0pclhyrhpgmyh3vxez" target="_blank" rel="noopener">https://zalo.me/g/vx0pclhyrhpgmyh3vxez</a></p>
+          <p>
+            <span class="vi-only">Khi gặp lỗi hoặc cần license, vui lòng cung cấp: phiên bản addin (Help/License
+              dialog), năm Revit, Machine ID, file log runtime ngày xảy ra lỗi.</span>
+            <span class="en-only">When reporting issues or requesting a license, please include: add-in version
+              (Help/License dialog), Revit year, Machine ID, runtime log from the day of the issue.</span>
+          </p>
+          <p>
+            <span class="vi-only">Phiên bản tài liệu: <strong>Lab84 v0.12.33</strong> &middot; <em>cập nhật
+                2026-07-19</em>.</span>
+            <span class="en-only">Document version: <strong>Lab84 v0.12.33</strong> &middot; <em>updated
+                2026-07-19</em>.</span>
+          </p>
+        </div>
+      </section>
+
+      <footer>
+        <p>
+          <span class="vi-only">&copy; Lab84 - Hien Phan</span>
+          <span class="en-only">&copy; Lab84 - Hien Phan</span>
+        </p>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    const btnVi = document.getElementById('btn-vi');
+    const btnEn = document.getElementById('btn-en');
+    function setLang(l) {
+      document.documentElement.setAttribute('data-lang', l);
+      document.documentElement.setAttribute('lang', l);
+      btnVi.classList.toggle('active', l === 'vi');
+      btnEn.classList.toggle('active', l === 'en');
+      try { localStorage.setItem('hprevit_lang', l); } catch (e) { }
+    }
+    btnVi.addEventListener('click', () => setLang('vi'));
+    btnEn.addEventListener('click', () => setLang('en'));
+    try {
+      const saved = localStorage.getItem('hprevit_lang');
+      if (saved === 'en') setLang('en');
+    } catch (e) { }
+
+    document.querySelectorAll('aside.sidebar a[href^="#"]').forEach(a => {
+      a.addEventListener('click', (e) => {
+        const id = a.getAttribute('href').slice(1);
+        const el = document.getElementById(id);
+        if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+  </script>
+  <script>
+    document.querySelectorAll('.module-card').forEach(card => {
+      const src = card.dataset.img;
+      if (!src) return;
+
+      // Wrap existing children in .module-body
+      const body = document.createElement('div');
+      body.className = 'module-body';
+      while (card.firstChild) body.appendChild(card.firstChild);
+
+      // Create image column
+      const imgDiv = document.createElement('div');
+      imgDiv.className = 'module-img';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = '';
+      imgDiv.appendChild(img);
+
+      card.appendChild(body);
+      card.appendChild(imgDiv);
+      card.classList.add('has-img');
+    });
+  </script>
+  <script>
+    document.addEventListener('copy', e => e.preventDefault());
+    document.addEventListener('cut', e => e.preventDefault());
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('selectstart', e => e.preventDefault());
+    document.addEventListener('dragstart', e => e.preventDefault());
+  </script>
+</body>
+
+</html>
